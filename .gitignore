@@ -1,0 +1,22 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+# Visual Studio 文件夹
+/.vs/
+
+# 构建输出文件夹
+[Bb]in/
+[Oo]bj/
+
+# 特定于项目的 VS Code 设置
+*/.vscode/
+
+# 移除特定路径的规则，因为通用规则已覆盖
+# /Pek.Zero.AppHost/bin/Debug/net9.0
+# /Pek.Zero.AppHost/obj
+# /pek.zero.client/obj/Debug
+# /Pek.Zero.Server/bin/Debug/net9.0
+# /Pek.Zero.Server/obj
+# /Pek.Zero.ServiceDefaults/bin/Debug/net9.0
+# /Pek.Zero.ServiceDefaults/obj
