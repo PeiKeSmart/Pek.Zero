@@ -9,8 +9,8 @@
 [Bb]in/
 [Oo]bj/
 
-# 特定于项目的 VS Code 设置
-*/.vscode/
+# 忽略所有 VS Code 编辑器设置文件夹
+**/ .vscode/
 
 # 移除特定路径的规则，因为通用规则已覆盖
 # /Pek.Zero.AppHost/bin/Debug/net9.0
