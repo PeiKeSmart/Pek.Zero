@@ -1,0 +1,7 @@
+﻿@inject IWorkContext workContext
+@inject IWebHelper webHelper
+@{
+    var link = Url.RouteUrl("NewsRSS", new { languageId = workContext.WorkingLanguage.Id }, webHelper.GetCurrentRequestProtocol());
+    var storeName = SiteInfo.GetDefaultSeo().SiteName;
+}
+<link href="@link" rel="alternate" type="application/rss+xml" title="@storeName: News" />

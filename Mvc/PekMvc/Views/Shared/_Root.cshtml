@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "_Root.Head";
+
+    // Css
+    PekHtml.AppendCssFileParts("/css/chuangchu.min.css");
+    PekHtml.AppendCssFileParts("/layui/css/layui.css");
+
+    // Script
+    PekHtml.AppendScriptParts(ResourceLocation.Footer, "/js/chuangchu.js");
+    PekHtml.AppendScriptParts(ResourceLocation.Footer, "/layer/layer.js");
+    PekHtml.AppendScriptParts(ResourceLocation.Footer, "/layui/layui.js");
+    PekHtml.AppendScriptParts(ResourceLocation.Footer, "/static/plugins/jquery214.min.js");
+}
+@await Html.PartialAsync("_Header")
+@RenderBody()
+@await Html.PartialAsync("_Footer")

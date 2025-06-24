@@ -1,0 +1,19 @@
+﻿@inject IWorkContext workContext
+@{
+    var language = workContext.WorkingLanguage;
+
+    PekHtml.AppendPageCssClassParts("html-main-page");
+}
+<style asp-location="true">
+
+</style>
+<script asp-location="Head">
+
+</script>
+
+12345678
+@language.LanguageCulture
+
+<script asp-location="Footer">
+
+</script>
