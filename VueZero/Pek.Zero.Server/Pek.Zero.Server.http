@@ -1,6 +1,0 @@
-@Pek.Zero.Server_HostAddress = http://localhost:5265
-
-GET {{Pek.Zero.Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
