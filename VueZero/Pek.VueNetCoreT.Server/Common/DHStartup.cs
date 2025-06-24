@@ -1,14 +1,11 @@
 ﻿using DH.Core.Domain.Localization;
 using DH.Entity;
 
-using Pek;
 using Pek.Infrastructure;
-using Pek.NCubeUI.MVC.Routing;
 using Pek.VirtualFileSystem;
+using Pek.VueNetCoreT.Server.Common.Routing;
 
-using PekMvc.Common.Routing;
-
-namespace PekMvc.Common;
+namespace Pek.VueNetCoreT.Server.Common;
 
 public partial class DHStartup : IPekStartup {
     /// <summary>
@@ -49,7 +46,6 @@ public partial class DHStartup : IPekStartup {
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
     {
         services.AddScoped<SlugRouteTransformer>();  // slug路由转换
-        services.AddScoped<IPekUrlHelper, PekUrlHelper>();
 
         //XTrace.WriteLine($"ConfigureServices进来了");
         DHSetting.Current.IsAllowUrlSuffix = true;
@@ -67,10 +63,6 @@ public partial class DHStartup : IPekStartup {
 
         LocalizationSettings.Current.AutomaticallyDetectLanguage = true;
         LocalizationSettings.Current.Save();
-
-        // 验证码
-        // 内存缓存
-        services.AddCaptcha(configuration);
 
         //var content = "Data".AsDirectory();
         //// 下载区域数据
