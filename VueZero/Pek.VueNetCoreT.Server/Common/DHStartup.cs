@@ -32,7 +32,7 @@ public partial class DHStartup : IPekStartup {
         var sitemap = CronJob.FindByName("Sitemap");
         if (sitemap != null)
         {
-            sitemap.Enable = true;
+            sitemap.Enable = false;
             sitemap.Update();
         }
     }
