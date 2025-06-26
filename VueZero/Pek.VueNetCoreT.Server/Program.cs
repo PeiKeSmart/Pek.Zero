@@ -80,15 +80,6 @@ if (!ApplicationHelper.IsIIS)
     });
 }
 
-services.Configure<ForwardedHeadersOptions>(options =>   // X-Forwarded-For
-{
-    options.ForwardLimit = null;
-    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-    options.ForwardedForHeaderName = SecuritySetting.Current.TrueClientIPHeader;
-    options.KnownNetworks.Clear();
-    options.KnownProxies.Clear();
-});
-
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
