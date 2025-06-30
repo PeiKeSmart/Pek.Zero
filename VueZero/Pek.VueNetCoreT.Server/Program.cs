@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 using NewLife.Caching;
