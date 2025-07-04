@@ -20,3 +20,5 @@
 # /Pek.Zero.Server/obj
 # /Pek.Zero.ServiceDefaults/bin/Debug/net9.0
 # /Pek.Zero.ServiceDefaults/obj
+/VueZero/pek.zero.client/.vscode
+/VueZero/pek.zero.client/node_modules
