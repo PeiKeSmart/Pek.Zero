@@ -1,0 +1,8 @@
+{
+  "excludeFiles": [
+    "**/*.db",
+    "**/bin/**/*.db",
+    "**/Data/**/*.db",
+    "**/DebugLog/**"
+  ]
+}
