@@ -10,7 +10,7 @@ using PekMvc.Common.Routing;
 
 namespace PekMvc.Common;
 
-public partial class DHStartup : IPekStartup {
+public partial class PekStartup : IPekStartup {
     /// <summary>
     /// 配置添加的中间件的使用
     /// </summary>

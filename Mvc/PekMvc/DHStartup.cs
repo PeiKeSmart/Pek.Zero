@@ -1,7 +1,7 @@
 ﻿using Pek.Infrastructure;
 using Pek.VirtualFileSystem;
 
-namespace Pek.VueNetCoreT.Server;
+namespace PekMvc;
 
 /// <summary>
 /// 表示应用程序启动时配置服务和中间件的对象
