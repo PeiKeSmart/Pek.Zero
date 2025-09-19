@@ -24,16 +24,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DH.NRedis.Extensions" Version="4.13.2025.701-beta0850" />
-    <PackageReference Include="DH.NStardust.Extensions" Version="4.13.2025.701-beta0954" />
-    <PackageReference Include="DH.SLazyCaptcha" Version="4.0.2025.703-beta0423" />
-    <PackageReference Include="Pek.AspNetCore" Version="4.12.2025.624-beta0913" />
-    <PackageReference Include="Pek.Common" Version="4.12.2025.626-beta1317" />
-    <PackageReference Include="Pek.NCubeUI" Version="4.13.2025.705-beta0819" />
+    <PackageReference Include="DH.NRedis.Extensions" Version="4.14.2025.826-beta0407" />
+    <PackageReference Include="DH.NStardust.Extensions" Version="4.14.2025.910-beta0622" />
+    <PackageReference Include="DH.SLazyCaptcha" Version="4.0.2025.821-beta1524" />
+    <PackageReference Include="Pek.AspNetCore" Version="4.14.2025.820-beta0309" />
+    <PackageReference Include="Pek.Common" Version="4.14.2025.912-beta1017" />
+    <PackageReference Include="Pek.NCubeUI" Version="4.14.2025.905-beta1233" />
   </ItemGroup>
 	
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>
