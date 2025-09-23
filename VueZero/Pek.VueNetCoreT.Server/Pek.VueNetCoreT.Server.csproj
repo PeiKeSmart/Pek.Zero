@@ -19,7 +19,7 @@
       <Version>9.0.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
-    <PackageReference Include="Pek.NCube.Api" Version="4.14.2025.905-beta1233" />
+    <PackageReference Include="Pek.NCube.Api" Version="4.14.2025.923-beta1557" />
     <PackageReference Include="PekVue.FrameWrok" Version="4.13.2025.705-beta0822" />
   </ItemGroup>
 
