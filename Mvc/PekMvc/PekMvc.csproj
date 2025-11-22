@@ -47,10 +47,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-	
-  <PropertyGroup> 
-    <ServerGarbageCollection>false</ServerGarbageCollection> <!--true是指的激活服务器GC模式，false是指的使用工作站GC模式-->
-	<ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+
+  <!--DATAS 是一项很棒的新功能，它将 Workstation GC 和 Server GC 的优势结合在一起：您开始时内存更少，当请求激增时，GC 可以动态扩展其托管堆的数量以提高吞吐量。当请求数在以后的某个时间点减少时，也可以减少托管堆的数量以释放内存 https://mp.weixin.qq.com/s/WJEkHmV3bPYStqZoDJhvmg-->
+  <PropertyGroup>
+	<ServerGarbageCollection>true</ServerGarbageCollection>
+	<GarbageCollectionAdapatationMode>1</GarbageCollectionAdapatationMode>
   </PropertyGroup>
 
 </Project>
