@@ -62,6 +62,7 @@ public partial class PekStartup : IPekStartup {
         DHSetting.Current.StartTime = DateTime.Now;
         DHSetting.Current.PaswordStrength = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$";
         DHSetting.Current.UserCenterUrl = "~/Member";
+        DHSetting.Current.SessionTimeout = 7200;
 
         DHSetting.Current.Save();
 

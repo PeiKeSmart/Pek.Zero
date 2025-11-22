@@ -109,7 +109,7 @@ var app = builder.Build();
 //app.UseHttpsRedirection();
 app.UseCube(builder.Environment);
 
-app.UseRouting();
+//app.UseRouting();
 
 app.UseAuthentication();  // 认证中间件 用于Jwt检验
 

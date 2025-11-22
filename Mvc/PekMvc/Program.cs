@@ -110,7 +110,7 @@ var app = builder.Build();
 app.UseCube(builder.Environment);
 //app.UseCubeHome();   # 路由已通过其他方式注册，不需要再注册
 
-app.UseRouting(); // 路由中间件
+//app.UseRouting(); // 路由中间件
 
 app.UseAuthentication();  // 认证中间件 用于Jwt检验
 
