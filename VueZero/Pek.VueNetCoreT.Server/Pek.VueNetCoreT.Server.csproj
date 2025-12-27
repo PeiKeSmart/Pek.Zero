@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>1a3f0205-9d45-45ba-9322-3fdd9b12d936</UserSecretsId>
@@ -12,14 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DH.NRedis.Extensions" Version="4.14.2025.1025-beta0126" />
-	<PackageReference Include="DH.NStardust.Extensions" Version="4.15.2025.1106-beta0743" />
-    <PackageReference Include="DH.Swagger" Version="4.13.2025.707-beta0858" />
+    <PackageReference Include="DH.NRedis.Extensions" Version="4.16.2025.1226-beta1054" />
+	<PackageReference Include="DH.NStardust.Extensions" Version="4.16.2025.1226-beta0357" />
+    <PackageReference Include="DH.Swagger" Version="4.16.2025.1126-beta1014" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
-      <Version>9.0.10</Version>
+      <Version>10.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
-    <PackageReference Include="Pek.NCube.Api" Version="4.14.2025.1111-beta1259" />
+    <PackageReference Include="Pek.NCube.Api" Version="4.16.2025.1225-beta0037" />
     <PackageReference Include="PekVue.FrameWrok" Version="4.13.2025.705-beta0822" />
   </ItemGroup>
 

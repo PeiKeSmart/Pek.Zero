@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyTitle>工具网站</AssemblyTitle>
     <Description>在线工具系统</Description>
     <Company>湖北登灏科技有限公司</Company>
@@ -24,16 +24,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DH.NRedis.Extensions" Version="4.14.2025.1025-beta0126" />
-    <PackageReference Include="DH.NStardust.Extensions" Version="4.15.2025.1106-beta0743" />
-    <PackageReference Include="DH.SLazyCaptcha" Version="4.0.2025.821-beta1524" />
-    <PackageReference Include="Pek.AspNetCore" Version="4.14.2025.1111-beta0804" />
-    <PackageReference Include="Pek.Common" Version="4.15.2025.1029-beta1406" />
-    <PackageReference Include="Pek.NCubeUI" Version="4.14.2025.1111-beta1259" />
+    <PackageReference Include="DH.NRedis.Extensions" Version="4.16.2025.1226-beta1054" />
+    <PackageReference Include="DH.NStardust.Extensions" Version="4.16.2025.1226-beta0357" />
+    <PackageReference Include="DH.SLazyCaptcha" Version="4.16.2025.1126-beta0316" />
+    <PackageReference Include="Pek.AspNetCore" Version="4.16.2025.1212-beta0634" />
+    <PackageReference Include="Pek.Common" Version="4.16.2025.1227-beta0406" />
+    <PackageReference Include="Pek.NCubeUI" Version="4.16.2025.1225-beta0037" />
   </ItemGroup>
 	
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
