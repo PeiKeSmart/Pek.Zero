@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Mvc/">
+    <Project Path="Mvc/PekMvc/PekMvc.csproj" />
+  </Folder>
+  <Folder Name="/Vue/">
+    <Project Path="VueZero/pek.vuenetcoret.client/pek.vuenetcoret.client.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+    <Project Path="VueZero/Pek.VueNetCoreT.Server/Pek.VueNetCoreT.Server.csproj" />
+  </Folder>
+</Solution>
