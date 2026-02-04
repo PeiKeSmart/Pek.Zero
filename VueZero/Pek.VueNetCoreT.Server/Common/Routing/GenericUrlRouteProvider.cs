@@ -1,5 +1,6 @@
 ﻿using DH.Core.Domain.Localization;
 
+using Pek.Configs;
 using Pek.NCube.Routing;
 
 namespace Pek.VueNetCoreT.Server.Common.Routing;
@@ -49,7 +50,7 @@ public class GenericUrlRouteProvider : BaseRouteProvider, IRouteProvider
 
         var pattern = $"{lang}/";
 
-        if (!DHSetting.Current.IsInstalled) return;
+        if (!PekSysSetting.Current.IsInstalled) return;
 
         // 通用路由（实际上路由是在 SlugRouteTransformer 中稍后处理的）
         //var genericCatalogPattern = $"{lang}/{{{PekRoutingDefaults.RouteValue.CatalogSeName}}}/{{{PekRoutingDefaults.RouteValue.SeName}}}";

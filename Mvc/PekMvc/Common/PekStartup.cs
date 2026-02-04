@@ -52,22 +52,6 @@ public partial class PekStartup : IPekStartup {
         services.AddScoped<IPekUrlHelper, PekUrlHelper>();
 
         //XTrace.WriteLine($"ConfigureServices进来了");
-        DHSetting.Current.IsAllowUrlSuffix = true;
-        DHSetting.Current.IsInstalled = true;
-
-        DHSetting.Current.IsAlertOrCheckCode = 2;
-        DHSetting.Current.AdminArea = "Biz";
-        DHSetting.Current.CaptChaUrl = "/CaptCha/GetCheckCode";
-        DHSetting.Current.SitemapXmlEnabled = true;
-        DHSetting.Current.StartTime = DateTime.Now;
-        DHSetting.Current.PaswordStrength = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$";
-        DHSetting.Current.UserCenterUrl = "~/Member";
-        DHSetting.Current.SessionTimeout = 7200;
-
-        DHSetting.Current.Save();
-
-        LocalizationSettings.Current.AutomaticallyDetectLanguage = true;
-        LocalizationSettings.Current.Save();
 
         // 验证码
         // 内存缓存

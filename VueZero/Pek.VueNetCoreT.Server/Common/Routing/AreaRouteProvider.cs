@@ -1,5 +1,6 @@
 ﻿using DH.Core.Domain.Localization;
 
+using Pek.Configs;
 using Pek.NCube.Routing;
 
 namespace Pek.VueNetCoreT.Server.Common.Routing;
@@ -20,7 +21,7 @@ public class AreaRouteProvider : BaseRouteProvider, IRouteProvider
     /// <param name="endpoints">路由构造器</param>
     public void RegisterRoutes(IEndpointRouteBuilder endpointRouteBuilder)
     {
-        if (!DHSetting.Current.IsInstalled) return;
+        if (!PekSysSetting.Current.IsInstalled) return;
 
         var lang = GetLanguageRoutePattern();
 
