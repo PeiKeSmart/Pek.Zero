@@ -45,7 +45,7 @@ public class SlugRouteTransformer : DynamicRouteValueTransformer
         XTrace.WriteLine($"获取到的Slug是多少：{slug}");
 
         var UrlSuffix = DHSetting.Current.IsAllowUrlSuffix ? DHSetting.Current.UrlSuffix : "";
-        if (UrlSuffix.IsNotNullAndWhiteSpace())
+        if (!UrlSuffix.IsNullOrWhiteSpace())
             slug = slug?.TrimEnd(UrlSuffix);
 
         // 通过 URL 别名查找记录

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using NewLife.Cube.ViewModels;
 
-using Pek.NCube;
+using Pek.NCube.BaseControllers;
 
 namespace PekMvc.Controllers;
 
