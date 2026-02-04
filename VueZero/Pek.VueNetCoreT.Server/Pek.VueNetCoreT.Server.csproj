@@ -12,14 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DH.NRedis.Extensions" Version="4.16.2025.1226-beta1054" />
-	<PackageReference Include="DH.NStardust.Extensions" Version="4.16.2025.1226-beta0357" />
-    <PackageReference Include="DH.Swagger" Version="4.16.2025.1126-beta1014" />
+    <PackageReference Include="DH.NRedis.Extensions" Version="4.17.2026.130-beta1020" />
+	<PackageReference Include="DH.NStardust.Extensions" Version="4.17.2026.130-beta0900" />
+    <PackageReference Include="DH.Swagger" Version="4.17.2026.113-beta1250" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
-      <Version>10.0.1</Version>
+      <Version>10.0.2</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
-    <PackageReference Include="Pek.NCube.Api" Version="4.16.2025.1225-beta0037" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
+    <PackageReference Include="Pek.NCube.Api" Version="4.16.2026.131-beta0714" />
     <PackageReference Include="PekVue.FrameWrok" Version="4.13.2025.705-beta0822" />
   </ItemGroup>
 
