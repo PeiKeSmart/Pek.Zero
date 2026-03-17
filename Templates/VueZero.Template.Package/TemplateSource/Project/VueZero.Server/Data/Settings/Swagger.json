@@ -1,0 +1,45 @@
+{
+  "SwaggerOption": {
+    "Enabled": true,
+    "MiniProfilerEnabled": false,
+    "XmlComments": [ "", "" ],
+    "RoutePrefix": "help",
+    "Description": "__COMPANY_NAME__ 提供的 __PROJECT_DESCRIPTION__",
+    "Title": "__PROJECT_TITLE__ 接口文档",
+    "Version": "first version",
+    "TermsOfService": "https://example.com",
+    "Contact": {
+      "Email": "dev@example.com",
+      "Name": "__PROJECT_TITLE__",
+      "Url": "https://example.com"
+    },
+    "License": {
+      "Name": "__PROJECT_TITLE__ 官方文档",
+      "Url": "https://example.com"
+    },
+    "Headers": [ //swagger默认头参数
+      {
+        "Name": "Signature",
+        "Description": "通信加密签名"
+      },
+      {
+        "Name": "TimeStamp",
+        "Description": "时间戳"
+      },
+      {
+        "Name": "Nonce",
+        "Description": "随机数"
+      }
+    ],
+    "Query": [ //swagger默认url公共参数
+      //{
+      //  "Name": "sign",
+      //  "Description": "签名"
+      //},
+      //{
+      //  "Name": "timestamp",
+      //  "Description": "客户端时间戳"
+      //}
+    ]
+  }
+}

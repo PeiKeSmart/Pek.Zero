@@ -1,0 +1,103 @@
+{
+  "author": "PeiKeSmart",
+  "classifications": [
+    "Web",
+    "ASP.NET Core",
+    "Vue",
+    "Vite",
+    "Pek"
+  ],
+  "identity": "PeiKeSmart.VueZero.Web",
+  "name": "VueZero 前后端项目模板",
+  "shortName": "vuezero",
+  "sourceName": "VueZero",
+  "preferNameDirectory": true,
+  "primaryOutputs": [
+    {
+      "path": "VueZero.Server/VueZero.Server.csproj"
+    }
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "symbols": {
+    "ProjectTitle": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "项目标题",
+      "defaultValue": "VueZero 应用",
+      "replaces": "__PROJECT_TITLE__",
+      "shortName": "title"
+    },
+    "ProjectDescription": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "项目描述",
+      "defaultValue": "基于 Vue 3 + Vite + ASP.NET Core 的前后端模板",
+      "replaces": "__PROJECT_DESCRIPTION__",
+      "shortName": "desc"
+    },
+    "CompanyName": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "公司名称",
+      "defaultValue": "PeiKeSmart",
+      "replaces": "__COMPANY_NAME__",
+      "shortName": "company"
+    },
+    "ServiceName": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "服务注册名称，默认跟随后端项目名",
+      "defaultValue": "__SERVICE_NAME__",
+      "replaces": "__SERVICE_NAME__",
+      "shortName": "service"
+    },
+    "ServerHttpPort": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "后端 HTTP 端口",
+      "defaultValue": "5117",
+      "replaces": "__SERVER_HTTP_PORT__",
+      "shortName": "http"
+    },
+    "ServerHttpsPort": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "后端 HTTPS 端口",
+      "defaultValue": "7272",
+      "replaces": "__SERVER_HTTPS_PORT__",
+      "shortName": "https"
+    },
+    "ClientDevPort": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "前端 Vite 开发端口",
+      "defaultValue": "53007",
+      "replaces": "__CLIENT_DEV_PORT__",
+      "shortName": "client-port"
+    },
+    "ClientPackageName": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "前端包名和开发证书名",
+      "defaultValue": "vuezero.client",
+      "replaces": "__CLIENT_PACKAGE_NAME__",
+      "shortName": "client-name"
+    }
+  },
+  "sources": [
+    {
+      "exclude": [
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        ".template.config/**",
+        "**/*.user",
+        "**/*.lock.json",
+        "**/node_modules/**",
+        "**/.vscode/**"
+      ]
+    }
+  ]
+}

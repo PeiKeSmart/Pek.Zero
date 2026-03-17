@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Apps/">
+    <Project Path="VueZero.Server/VueZero.Server.csproj" />
+    <Project Path="VueZero.Client/VueZero.Client.esproj" />
+  </Folder>
+</Solution>

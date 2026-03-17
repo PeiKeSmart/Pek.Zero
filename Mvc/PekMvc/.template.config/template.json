@@ -1,0 +1,79 @@
+{
+  "author": "PeiKeSmart",
+  "classifications": [
+    "Web",
+    "ASP.NET Core",
+    "MVC",
+    "Pek"
+  ],
+  "identity": "PeiKeSmart.PekMvc.Web",
+  "name": "PekMvc Web 项目模板",
+  "shortName": "pekmvc",
+  "sourceName": "PekMvc",
+  "preferNameDirectory": true,
+  "primaryOutputs": [
+    {
+      "path": "PekMvc.csproj"
+    }
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "symbols": {
+    "ProjectTitle": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "站点标题和程序集标题",
+      "defaultValue": "工具网站",
+      "replaces": "__PROJECT_TITLE__",
+      "shortName": "title"
+    },
+    "ProjectDescription": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "项目描述和默认 SEO 描述",
+      "defaultValue": "在线工具系统",
+      "replaces": "__PROJECT_DESCRIPTION__",
+      "shortName": "desc"
+    },
+    "CompanyName": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "公司名称",
+      "defaultValue": "湖北登灏科技有限公司",
+      "replaces": "__COMPANY_NAME__",
+      "shortName": "company"
+    },
+    "ServiceName": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "服务注册名称，默认跟随项目名",
+      "defaultValue": "__SERVICE_NAME__",
+      "replaces": "__SERVICE_NAME__",
+      "shortName": "service"
+    },
+    "DbConnName": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "XCode 数据库连接名",
+      "defaultValue": "DH",
+      "replaces": "__DB_CONN_NAME__",
+      "shortName": "db"
+    }
+  },
+  "sources": [
+    {
+      "exclude": [
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        ".template.config/**",
+        "**/*.user",
+        "**/*.lock.json",
+        "Properties/PublishProfiles/**",
+        "wwwroot/db_backups/**",
+        "wwwroot/sitemaps/**"
+      ]
+    }
+  ]
+}

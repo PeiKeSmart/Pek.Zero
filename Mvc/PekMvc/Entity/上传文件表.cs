@@ -315,7 +315,7 @@ public partial class UploadInfo : IUploadInfo, IEntity<IUploadInfo>
         /// <summary>更新地址</summary>
         public static readonly Field UpdateIP = FindByName("UpdateIP");
 
-        static Field FindByName(String name) => Meta.Table.FindByName(name);
+        static Field FindByName(String name) => Meta.Table.FindByName(name)!;
     }
 
     /// <summary>取得上传文件表字段名称的快捷方式</summary>

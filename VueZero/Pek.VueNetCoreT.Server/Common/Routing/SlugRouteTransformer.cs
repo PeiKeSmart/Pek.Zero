@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using NewLife;
 using NewLife.Log;
 
+using Pek;
 using Pek.Events;
 using Pek.NCube.Events;
 using Pek.NCube.Routing;
@@ -26,7 +27,7 @@ public class SlugRouteTransformer : DynamicRouteValueTransformer
         _webHelper = webHelper;
     }
 
-    public override async ValueTask<RouteValueDictionary?> TransformAsync(Microsoft.AspNetCore.Http.HttpContext httpContext, RouteValueDictionary routeValues)
+    public override async ValueTask<RouteValueDictionary> TransformAsync(Microsoft.AspNetCore.Http.HttpContext httpContext, RouteValueDictionary routeValues)
     {
         // 静态文件不处理
         if (_webHelper.IsStaticResource()) return new RouteValueDictionary(routeValues);
@@ -35,8 +36,6 @@ public class SlugRouteTransformer : DynamicRouteValueTransformer
 
         // 获取用于动作选择的转换值
         var values = new RouteValueDictionary(routeValues);
-        if (values is null)
-            return values;
 
         if (!values.TryGetValue(PekRoutingDefaults.RouteValue.SeName, out var slugValue))
             return values;

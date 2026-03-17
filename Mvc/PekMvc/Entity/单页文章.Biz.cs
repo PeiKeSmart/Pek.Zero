@@ -35,10 +35,10 @@ public partial class SingleArticle : DHEntityBase<SingleArticle>
         //var df = Meta.Factory.AdditionalFields;
         //df.Add(nameof(Sort));
 
-        // 过滤器 UserModule、TimeModule、IPModule
-        Meta.Modules.Add(new UserModule { AllowEmpty = false });
-        Meta.Modules.Add<TimeModule>();
-        Meta.Modules.Add(new IPModule { AllowEmpty = false });
+        // 过滤器 UserInterceptor、TimeInterceptor、IPInterceptor
+        Meta.Interceptors.Add(new UserInterceptor { AllowEmpty = false });
+        Meta.Interceptors.Add<TimeInterceptor>();
+        Meta.Interceptors.Add(new IPInterceptor { AllowEmpty = false });
 
         // 实体缓存
         // var ec = Meta.Cache;
@@ -48,7 +48,7 @@ public partial class SingleArticle : DHEntityBase<SingleArticle>
         var sc = Meta.SingleCache;
         // sc.Expire = 60;
         sc.FindSlaveKeyMethod = k => Find(_.Name == k);
-        sc.GetSlaveKeyMethod = e => e.Name;
+        sc.GetSlaveKeyMethod = e => e.Name ?? String.Empty;
     }
 
     /// <summary>验证并修补数据，返回验证结果，或者通过抛出异常的方式提示验证失败。</summary>

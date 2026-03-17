@@ -1,0 +1,7 @@
+﻿@VueZero.Server_HostAddress = http://localhost:__SERVER_HTTP_PORT__
+
+GET {{VueZero.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+

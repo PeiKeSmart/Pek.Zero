@@ -35,10 +35,10 @@ public partial class UserEx : DHEntityBase<UserEx>
         //var df = Meta.Factory.AdditionalFields;
         //df.Add(nameof(UpdateUserID));
 
-        // 过滤器 UserModule、TimeModule、IPModule
-        Meta.Modules.Add(new UserModule { AllowEmpty = false });
-        Meta.Modules.Add<TimeModule>();
-        Meta.Modules.Add(new IPModule { AllowEmpty = false });
+        // 过滤器 UserInterceptor、TimeInterceptor、IPInterceptor
+        Meta.Interceptors.Add(new UserInterceptor { AllowEmpty = false });
+        Meta.Interceptors.Add<TimeInterceptor>();
+        Meta.Interceptors.Add(new IPInterceptor { AllowEmpty = false });
 
         // 实体缓存
         // var ec = Meta.Cache;

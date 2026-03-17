@@ -290,7 +290,7 @@ public partial class SingleArticle : ISingleArticle, IEntity<ISingleArticle>
                 case "Url": _Url = Convert.ToString(value); break;
                 case "Show": _Show = value.ToBoolean(); break;
                 case "Sort": _Sort = value.ToInt(); break;
-                case "Code": _Code = Convert.ToString(value); break;
+                case "Code": _Code = Convert.ToString(value) ?? String.Empty; break;
                 case "Name": _Name = Convert.ToString(value); break;
                 case "Content": _Content = Convert.ToString(value); break;
                 case "MobileContent": _MobileContent = Convert.ToString(value); break;
@@ -442,7 +442,7 @@ public partial class SingleArticle : ISingleArticle, IEntity<ISingleArticle>
         /// <summary>更新地址</summary>
         public static readonly Field UpdateIP = FindByName("UpdateIP");
 
-        static Field FindByName(String name) => Meta.Table.FindByName(name);
+        static Field FindByName(String name) => Meta.Table.FindByName(name)!;
     }
 
     /// <summary>取得单页文章字段名称的快捷方式</summary>

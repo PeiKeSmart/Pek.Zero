@@ -1,5 +1,6 @@
 ﻿using NewLife.Log;
 
+using Pek;
 using Pek.Events;
 using Pek.NCube.Events;
 using Pek.NCubeUI.Events;

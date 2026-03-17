@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
 
 using NewLife;
 
@@ -19,12 +21,23 @@ namespace PekMvc.Common;
 /// </summary>
 public class PekUrlHelper : IPekUrlHelper {
     protected readonly IUrlHelperFactory _urlHelperFactory;
-    protected readonly IActionContextAccessor _actionContextAccessor;
+    protected readonly IHttpContextAccessor _httpContextAccessor;
 
-    public PekUrlHelper(IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccessor)
+    public PekUrlHelper(IUrlHelperFactory urlHelperFactory, IHttpContextAccessor httpContextAccessor)
     {
         _urlHelperFactory = urlHelperFactory;
-        _actionContextAccessor = actionContextAccessor;
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    protected IUrlHelper? GetUrlHelper()
+    {
+        var httpContext = _httpContextAccessor.HttpContext;
+        if (httpContext == null) return null;
+
+        var routeData = httpContext.GetRouteData() ?? new RouteData();
+        var actionContext = new ActionContext(httpContext, routeData, new ActionDescriptor());
+
+        return _urlHelperFactory.GetUrlHelper(actionContext);
     }
 
     /// <summary>
@@ -40,7 +53,8 @@ public class PekUrlHelper : IPekUrlHelper {
     {
         await Task.CompletedTask.ConfigureAwait(false);
 
-        var urlHelper = _urlHelperFactory.GetUrlHelper(_actionContextAccessor.ActionContext!);
+        var urlHelper = GetUrlHelper();
+        if (urlHelper == null) return null;
 
         var routeValues = new RouteValueDictionary(values);
 
@@ -62,7 +76,8 @@ public class PekUrlHelper : IPekUrlHelper {
     /// <returns>一个表示异步操作的任务  任务结果包含生成的 URL</returns>
     public String? RouteGenericUrl<TEntity>(object? values = null, string? protocol = null, string? host = null, string? fragment = null) where TEntity : BasePekModel, ISlugSupported
     {
-        var urlHelper = _urlHelperFactory.GetUrlHelper(_actionContextAccessor.ActionContext!);
+        var urlHelper = GetUrlHelper();
+        if (urlHelper == null) return null;
 
         var routeValues = new RouteValueDictionary(values);
 
@@ -91,7 +106,8 @@ public class PekUrlHelper : IPekUrlHelper {
     {
         await Task.CompletedTask.ConfigureAwait(false);
 
-        var urlHelper = _urlHelperFactory.GetUrlHelper(_actionContextAccessor.ActionContext!);
+        var urlHelper = GetUrlHelper();
+        if (urlHelper == null) return null;
 
         var routeValues = new RouteValueDictionary(values);
 
@@ -125,7 +141,8 @@ public class PekUrlHelper : IPekUrlHelper {
     /// </returns>
     public String? RouteGenericUrl<TEntity>(String routerName, String? CurrentLanguage = null, Object? values = null, String? protocol = null, String? host = null, String? fragment = null) where TEntity : BasePekModel, ISlugSupported
     {
-        var urlHelper = _urlHelperFactory.GetUrlHelper(_actionContextAccessor.ActionContext!);
+        var urlHelper = GetUrlHelper();
+        if (urlHelper == null) return null;
 
         var routeValues = new RouteValueDictionary(values);
 

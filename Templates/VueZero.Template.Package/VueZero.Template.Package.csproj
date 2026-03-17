@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <PackageId>VueZero.Template</PackageId>
+    <Title>VueZero.Template</Title>
+    <Description>基于 VueZero 的 dotnet new 前后端模板包</Description>
+    <Authors>PeiKeSmart</Authors>
+    <PackageType>Template</PackageType>
+    <PackageVersion>1.0.2026.0317</PackageVersion>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <NoWarn>NU5128</NoWarn>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="TemplateSource\Project\**\*"
+             Exclude="TemplateSource\Project\.template.config\**;TemplateSource\Project\**\bin\**;TemplateSource\Project\**\obj\**;TemplateSource\Project\**\node_modules\**;TemplateSource\Project\**\*.user;TemplateSource\Project\**\.vscode\**"
+             Pack="true"
+             PackagePath="content\VueZero\" />
+    <Content Include="TemplateSource\Project\.template.config\template.json"
+             Pack="true"
+             PackagePath="content\VueZero\.template.config\template.json" />
+
+    <Content Include="TemplateSource\Project\**\*"
+             Exclude="TemplateSource\Project\.template.config\**;TemplateSource\Project\**\bin\**;TemplateSource\Project\**\obj\**;TemplateSource\Project\**\node_modules\**;TemplateSource\Project\**\*.user;TemplateSource\Project\**\.vscode\**"
+             Pack="true"
+             PackagePath="content\VueZero.Solution\" />
+    <Content Include="TemplateSource\Solution\.template.config\template.json"
+             Pack="true"
+             PackagePath="content\VueZero.Solution\.template.config\template.json" />
+    <Content Include="TemplateSource\Solution\VueZero.slnx"
+             Pack="true"
+             PackagePath="content\VueZero.Solution\VueZero.slnx" />
+  </ItemGroup>
+
+</Project>

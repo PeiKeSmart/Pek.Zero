@@ -145,7 +145,7 @@ public partial class UserEx : IUserEx, IEntity<IUserEx>
         /// <summary>更新地址</summary>
         public static readonly Field UpdateIP = FindByName("UpdateIP");
 
-        static Field FindByName(String name) => Meta.Table.FindByName(name);
+        static Field FindByName(String name) => Meta.Table.FindByName(name)!;
     }
 
     /// <summary>取得用户扩展表字段名称的快捷方式</summary>

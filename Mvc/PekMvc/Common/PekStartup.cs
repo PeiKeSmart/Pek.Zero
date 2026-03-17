@@ -48,6 +48,7 @@ public partial class PekStartup : IPekStartup {
     /// <param name="webHostEnvironment"></param>
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
     {
+        services.AddHttpContextAccessor();
         services.AddScoped<SlugRouteTransformer>();  // slug路由转换
         services.AddScoped<IPekUrlHelper, PekUrlHelper>();
 

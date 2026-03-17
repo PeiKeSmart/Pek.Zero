@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/Mvc/">
+    <Project Path="Mvc/PekMvc/PekMvc.csproj" />
+  </Folder>
+</Solution>

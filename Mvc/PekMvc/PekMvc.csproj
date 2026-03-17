@@ -12,8 +12,6 @@
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(VersionPrefix).*</AssemblyVersion>
     <Deterministic>false</Deterministic>
-    <OutputPath>..\..\Bin\PekMvc</OutputPath>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
@@ -21,6 +19,11 @@
 
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <!--允许你指定要在生成和发布过程中为哪些语言保留附属资源程序集-->
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('..\..\Pek.Zero.slnx')">
+    <OutputPath>..\..\Bin\PekMvc</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

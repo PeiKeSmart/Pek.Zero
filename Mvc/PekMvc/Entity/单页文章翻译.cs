@@ -258,7 +258,7 @@ public partial class SingleArticleLan : ISingleArticleLan, IEntity<ISingleArticl
         /// <summary>SEO描述</summary>
         public static readonly Field Description = FindByName("Description");
 
-        static Field FindByName(String name) => Meta.Table.FindByName(name);
+        static Field FindByName(String name) => Meta.Table.FindByName(name)!;
     }
 
     /// <summary>取得单页文章翻译字段名称的快捷方式</summary>

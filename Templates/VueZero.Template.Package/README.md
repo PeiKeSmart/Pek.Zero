@@ -1,0 +1,207 @@
+# VueZero 模板说明
+
+## 概述
+
+该目录提供一套基于 VueZero 的 dotnet new 模板包，包含以下两个模板：
+
+- vuezero：生成 Vue 3 + Vite + ASP.NET Core 的前后端项目骨架
+- vuezero-sln：生成带解决方案文件的完整骨架
+
+模板包项目：Templates/VueZero.Template.Package/VueZero.Template.Package.csproj
+
+一键脚本：Templates/VueZero.Template.Package/pack-template.ps1
+
+## 模板内容
+
+项目模板生成后包含以下目录：
+
+- DemoVueZero.Server：后端 ASP.NET Core 项目
+- DemoVueZero.Client：前端 Vue 3 + Vite 项目
+
+解决方案模板额外生成：
+
+- DemoVueZero.slnx：解决方案文件
+
+## 打包与安装
+
+在仓库根目录执行：
+
+```powershell
+.\Templates\VueZero.Template.Package\pack-template.ps1
+```
+
+只打包不安装：
+
+```powershell
+dotnet pack .\Templates\VueZero.Template.Package\VueZero.Template.Package.csproj -c Release
+```
+
+安装最新模板包：
+
+```powershell
+Get-ChildItem .\Templates\VueZero.Template.Package\bin\Release\VueZero.Template.*.nupkg |
+  Sort-Object LastWriteTime -Descending |
+  Select-Object -First 1 -ExpandProperty FullName |
+  ForEach-Object { dotnet new install $_ }
+```
+
+卸载模板包：
+
+```powershell
+dotnet new uninstall VueZero.Template
+```
+
+## 一键脚本
+
+脚本支持以下参数：
+
+| 参数 | 说明 |
+|------|------|
+| Configuration | 打包配置，默认 Release |
+| PackageVersion | 指定模板包版本号 |
+| Install | 打包后自动安装模板 |
+| SmokeTest | 打包后自动安装并执行生成与编译验证 |
+
+示例：
+
+```powershell
+.\Templates\VueZero.Template.Package\pack-template.ps1 -Install -SmokeTest
+```
+
+## 创建项目模板
+
+最小命令：
+
+```powershell
+dotnet new vuezero -n DemoVueZero -o .\Output\DemoVueZero
+```
+
+完整示例：
+
+```powershell
+dotnet new vuezero -n DemoVueZero -o .\Output\DemoVueZero --ProjectTitle DemoApp --ProjectDescription "Demo full stack template" --CompanyName DemoCompany --ServiceName DemoVueZero.Service --ServerHttpPort 5217 --ServerHttpsPort 7372 --ClientDevPort 53017 --ClientPackageName demo.client
+```
+
+生成后可编译后端：
+
+```powershell
+dotnet build .\Output\DemoVueZero\DemoVueZero.Server\DemoVueZero.Server.csproj -nologo
+```
+
+## 创建解决方案模板
+
+最小命令：
+
+```powershell
+dotnet new vuezero-sln -n DemoVueZero -o .\Output\DemoVueZero
+```
+
+完整示例：
+
+```powershell
+dotnet new vuezero-sln -n DemoVueZero -o .\Output\DemoVueZero --ProjectTitle DemoApp --ProjectDescription "Demo full stack template" --CompanyName DemoCompany --ServiceName DemoVueZero.Service --ServerHttpPort 5217 --ServerHttpsPort 7372 --ClientDevPort 53017 --ClientPackageName demo.client
+```
+
+生成后可编译整个解决方案：
+
+```powershell
+dotnet build .\Output\DemoVueZero\DemoVueZero.slnx -nologo
+```
+
+## 生成后如何启动
+
+### 启动后端
+
+在后端项目目录执行：
+
+```powershell
+cd .\Output\DemoVueZero\DemoVueZero.Server
+dotnet run
+```
+
+默认监听地址取决于模板参数：
+
+- HTTP：ServerHttpPort
+- HTTPS：ServerHttpsPort
+
+例如使用默认值时：
+
+- http://localhost:5117
+- https://localhost:7272
+
+### 启动前端开发服务器
+
+在前端项目目录执行：
+
+```powershell
+cd .\Output\DemoVueZero\DemoVueZero.Client
+npm install
+npm run dev
+```
+
+默认前端开发地址取决于 ClientDevPort，默认是：
+
+- https://localhost:53007
+
+### 前后端联调
+
+推荐顺序：
+
+1. 先启动后端 DemoVueZero.Server
+2. 再启动前端 DemoVueZero.Client
+3. 浏览器访问前端 Vite 地址进行联调
+
+前端开发代理会根据后端启动参数自动转发到 ASP.NET Core 服务。
+
+## 模板参数
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| ProjectTitle | VueZero 应用 | 项目标题，同时写入后端程序集标题、Swagger 标题、前端 README 标题 |
+| ProjectDescription | 基于 Vue 3 + Vite + ASP.NET Core 的前后端模板 | 项目描述，同时写入后端程序集描述和 Swagger 描述 |
+| CompanyName | PeiKeSmart | 公司名称，同时写入程序集 Company 等元数据 |
+| ServiceName | __SERVICE_NAME__ | 服务注册名称。未显式传入时，运行时回退到后端应用名 |
+| ServerHttpPort | 5117 | 后端 HTTP 端口 |
+| ServerHttpsPort | 7272 | 后端 HTTPS 端口 |
+| ClientDevPort | 53007 | 前端 Vite 开发端口，同时用于 SpaProxyServerUrl |
+| ClientPackageName | vuezero.client | 前端包名，同时用于本地开发证书名 |
+
+## 参数影响点
+
+主要替换位置包括：
+
+- 后端项目文件中的程序集元数据
+- 后端 Program.cs 中的 RegisterService 服务名
+- 后端 appsettings.json 和 launchSettings.json 中的端口
+- 后端 Data/Settings/Swagger.json 中的标题、描述和联系信息
+- 前端 package.json 中的 name
+- 前端 vite.config.ts 中的开发证书名和开发端口
+
+## 验证状态
+
+当前模板已完成以下验证：
+
+- 模板包可正常打包
+- 模板包可正常安装
+- vuezero 可正常生成并编译通过
+- vuezero-sln 可正常生成并编译通过
+- pack-template.ps1 -Install -SmokeTest 已验证通过
+
+## 常用命令
+
+查看模板帮助：
+
+```powershell
+dotnet new vuezero -h
+dotnet new vuezero-sln -h
+```
+
+重新安装本地最新模板包：
+
+```powershell
+dotnet new uninstall VueZero.Template
+Get-ChildItem .\Templates\VueZero.Template.Package\bin\Release\VueZero.Template.*.nupkg |
+  Sort-Object LastWriteTime -Descending |
+  Select-Object -First 1 -ExpandProperty FullName |
+  ForEach-Object { dotnet new install $_ }
+```
