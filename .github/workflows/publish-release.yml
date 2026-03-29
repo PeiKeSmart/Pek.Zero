@@ -13,7 +13,7 @@ on:
 
 jobs:
   build-publish:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -27,36 +27,50 @@ jobs:
             10.x
 
       - name: Resolve release version
-        shell: bash
+        shell: pwsh
         run: |
-          input_version="${{ inputs.packageVersion }}"
-          current_version=$(sed -n 's:.*<PackageVersion>\(.*\)</PackageVersion>.*:\1:p' Templates/PeiKeSmart.Template.Bundle/PeiKeSmart.Template.Bundle.csproj | head -n 1)
-          if [[ ! "$current_version" =~ ^([0-9]+\.[0-9]+)\.[0-9]{4}\.[0-9]{4}(-beta[0-9]{4})?$ ]]; then
-            echo "Unexpected PackageVersion format: $current_version"
-            exit 1
-          fi
+          $inputVersion = '${{ inputs.packageVersion }}'
+          $projectText = Get-Content ./Templates/PeiKeSmart.Template.Bundle/PeiKeSmart.Template.Bundle.csproj -Raw
+          $versionMatch = [regex]::Match($projectText, '<PackageVersion>\s*(?<version>[^<]+)\s*</PackageVersion>', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+          if (!$versionMatch.Success)
+          {
+              throw 'PackageVersion was not found.'
+          }
 
-          prefix="${BASH_REMATCH[1]}"
-          if [[ -n "$input_version" ]]; then
-            package_version="$input_version"
-          elif [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            tag_name="${GITHUB_REF_NAME}"
-            if [[ "$tag_name" != template-v* ]]; then
-              echo "Tag must start with template-v"
-              exit 1
-            fi
+          $currentVersion = $versionMatch.Groups['version'].Value.Trim()
+          $prefixMatch = [regex]::Match($currentVersion, '^(?<prefix>\d+\.\d+)\.\d{4}\.\d{4}(-beta\d{4})?$')
+          if (!$prefixMatch.Success)
+          {
+              throw "Unexpected PackageVersion format: $currentVersion"
+          }
 
-            package_version="${tag_name#template-v}"
+          if (![String]::IsNullOrWhiteSpace($inputVersion))
+          {
+              $packageVersion = $inputVersion.Trim()
+          }
+          elseif ($env:GITHUB_REF_TYPE -eq 'tag')
+          {
+              $tagName = $env:GITHUB_REF_NAME
+              if (!$tagName.StartsWith('template-v', [StringComparison]::Ordinal))
+              {
+                  throw 'Tag must start with template-v'
+              }
+
+              $packageVersion = $tagName.Substring('template-v'.Length)
+          }
           else
-            package_version="${prefix}.$(TZ='Asia/Shanghai' date +'%Y.%m%d')"
-          fi
+          {
+              $chinaTimeZone = [System.TimeZoneInfo]::FindSystemTimeZoneById('China Standard Time')
+              $now = [System.TimeZoneInfo]::ConvertTime([DateTimeOffset]::UtcNow, $chinaTimeZone)
+              $packageVersion = '{0}.{1}' -f $prefixMatch.Groups['prefix'].Value, $now.ToString('yyyy.MMdd')
+          }
 
-          if [[ ! "$package_version" =~ ^[0-9]+\.[0-9]+\.[0-9]{4}\.[0-9]{4}$ ]]; then
-            echo "Release version does not match expected format: $package_version"
-            exit 1
-          fi
+          if ($packageVersion -notmatch '^\d+\.\d+\.\d{4}\.\d{4}$')
+          {
+              throw "Release version does not match expected format: $packageVersion"
+          }
 
-          echo "PACKAGE_VERSION=$package_version" >> "$GITHUB_ENV"
+          "PACKAGE_VERSION=$packageVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Validate templates
         shell: pwsh

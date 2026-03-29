@@ -14,7 +14,7 @@ on:
 
 jobs:
   build-publish:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -28,17 +28,26 @@ jobs:
             10.x
 
       - name: Resolve beta version
-        shell: bash
+        shell: pwsh
         run: |
-          current_version=$(sed -n 's:.*<PackageVersion>\(.*\)</PackageVersion>.*:\1:p' Templates/PeiKeSmart.Template.Bundle/PeiKeSmart.Template.Bundle.csproj | head -n 1)
-          if [[ ! "$current_version" =~ ^([0-9]+\.[0-9]+)\.[0-9]{4}\.[0-9]{4}(-beta[0-9]{4})?$ ]]; then
-            echo "Unexpected PackageVersion format: $current_version"
-            exit 1
-          fi
+          $projectText = Get-Content ./Templates/PeiKeSmart.Template.Bundle/PeiKeSmart.Template.Bundle.csproj -Raw
+          $versionMatch = [regex]::Match($projectText, '<PackageVersion>\s*(?<version>[^<]+)\s*</PackageVersion>', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+          if (!$versionMatch.Success)
+          {
+              throw 'PackageVersion was not found.'
+          }
 
-          prefix="${BASH_REMATCH[1]}"
-          package_version="${prefix}.$(TZ='Asia/Shanghai' date +'%Y.%m%d-beta%H%M')"
-          echo "PACKAGE_VERSION=$package_version" >> "$GITHUB_ENV"
+          $currentVersion = $versionMatch.Groups['version'].Value.Trim()
+          $prefixMatch = [regex]::Match($currentVersion, '^(?<prefix>\d+\.\d+)\.\d{4}\.\d{4}(-beta\d{4})?$')
+          if (!$prefixMatch.Success)
+          {
+              throw "Unexpected PackageVersion format: $currentVersion"
+          }
+
+          $chinaTimeZone = [System.TimeZoneInfo]::FindSystemTimeZoneById('China Standard Time')
+          $now = [System.TimeZoneInfo]::ConvertTime([DateTimeOffset]::UtcNow, $chinaTimeZone)
+          $packageVersion = '{0}.{1}' -f $prefixMatch.Groups['prefix'].Value, $now.ToString('yyyy.MMdd-betaHHmm')
+          "PACKAGE_VERSION=$packageVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Validate templates
         shell: pwsh
