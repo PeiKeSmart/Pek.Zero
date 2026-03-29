@@ -11,12 +11,14 @@ description: "Use when working on dotnet new template packages, template.json, p
 
 - 模板显示名 `name` 必须以 `Pek` 开头，例如 `PekMvc Web 项目模板`、`PekVueZero 解决方案模板`
 - 模板短名 `shortName` 必须以 `pek` 开头，例如 `pekmvc`、`pekvuezero-sln`
+- 模板包 `PackageId` 与 `Title` 必须采用 `PekXxx.Template` 风格，例如 `PekMvc.Template`、`PekVueZero.Template`、`PekBundle.Template`
 - 示例项目名、解决方案名、服务名优先使用 `DemoPekXxx` 风格
 - 新增模板时，禁止引入不带 `Pek` 前缀的公开模板入口
 
 ## 2. 聚合安装约束
 
 - 新增模板后必须保证聚合模板包一次安装即可提供全部模板
+- 对外只保留 `PekBundle.Template` 一种安装方式，单模板包不得再提供直接安装入口
 - 优先复用聚合模板包现有自动导入机制，不要手工复制模板内容形成第二份来源
 - 若新增模板需要新增校验规则，必须同步更新聚合模板包脚本
 

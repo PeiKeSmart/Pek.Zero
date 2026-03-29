@@ -9,6 +9,8 @@
 
 模板包项目：Templates/VueZero.Template.Package/VueZero.Template.Package.csproj
 
+模板包 ID：PekVueZero.Template
+
 一键脚本：Templates/VueZero.Template.Package/pack-template.ps1
 
 ## 模板内容
@@ -22,7 +24,7 @@
 
 - DemoVueZero.slnx：解决方案文件
 
-## 打包与安装
+## 打包与使用
 
 在仓库根目录执行：
 
@@ -36,19 +38,10 @@
 dotnet pack .\Templates\VueZero.Template.Package\VueZero.Template.Package.csproj -c Release
 ```
 
-安装最新模板包：
+该模板包不再直接提供安装入口。统一安装方式请使用聚合模板包：
 
 ```powershell
-Get-ChildItem .\Templates\VueZero.Template.Package\bin\Release\VueZero.Template.*.nupkg |
-  Sort-Object LastWriteTime -Descending |
-  Select-Object -First 1 -ExpandProperty FullName |
-  ForEach-Object { dotnet new install $_ }
-```
-
-卸载模板包：
-
-```powershell
-dotnet new uninstall VueZero.Template
+.\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -Install
 ```
 
 ## 一键脚本
@@ -59,14 +52,14 @@ dotnet new uninstall VueZero.Template
 |------|------|
 | Configuration | 打包配置，默认 Release |
 | PackageVersion | 指定模板包版本号 |
-| Install | 打包后自动安装模板 |
-| SmokeTest | 打包后自动安装并执行生成与编译验证 |
 
-示例：
+说明：
 
 ```powershell
-.\Templates\VueZero.Template.Package\pack-template.ps1 -Install -SmokeTest
+.\Templates\VueZero.Template.Package\pack-template.ps1
 ```
+
+如需安装或做 SmokeTest，请统一使用聚合模板包脚本。
 
 ## 创建项目模板
 
@@ -182,10 +175,10 @@ npm run dev
 当前模板已完成以下验证：
 
 - 模板包可正常打包
-- 模板包可正常安装
+- 模板通过 PekBundle.Template 可正常安装
 - pekvuezero 可正常生成并编译通过
 - pekvuezero-sln 可正常生成并编译通过
-- pack-template.ps1 -Install -SmokeTest 已验证通过
+- 聚合模板包 pack-template.ps1 -Install -SmokeTest 已验证通过
 
 ## 常用命令
 
@@ -196,12 +189,8 @@ dotnet new pekvuezero -h
 dotnet new pekvuezero-sln -h
 ```
 
-重新安装本地最新模板包：
+统一安装最新模板包：
 
 ```powershell
-dotnet new uninstall VueZero.Template
-Get-ChildItem .\Templates\VueZero.Template.Package\bin\Release\VueZero.Template.*.nupkg |
-  Sort-Object LastWriteTime -Descending |
-  Select-Object -First 1 -ExpandProperty FullName |
-  ForEach-Object { dotnet new install $_ }
+.\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -Install
 ```

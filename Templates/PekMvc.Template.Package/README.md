@@ -20,7 +20,7 @@
 - DemoPekMvc.slnx 风格的解决方案骨架
 - Mvc/DemoPekMvcSolution/DemoPekMvcSolution.csproj 风格的项目结构
 
-## 打包与安装
+## 打包与使用
 
 在仓库根目录执行：
 
@@ -34,19 +34,10 @@
 dotnet pack .\Templates\PekMvc.Template.Package\PekMvc.Template.Package.csproj -c Release
 ```
 
-安装最新模板包：
+该模板包不再直接提供安装入口。统一安装方式请使用聚合模板包：
 
 ```powershell
-Get-ChildItem .\Templates\PekMvc.Template.Package\bin\Release\PekMvc.Template.*.nupkg |
-  Sort-Object LastWriteTime -Descending |
-  Select-Object -First 1 -ExpandProperty FullName |
-  ForEach-Object { dotnet new install $_ }
-```
-
-卸载模板包：
-
-```powershell
-dotnet new uninstall PekMvc.Template
+.\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -Install
 ```
 
 ## 一键脚本
@@ -57,14 +48,14 @@ dotnet new uninstall PekMvc.Template
 |------|------|
 | Configuration | 打包配置，默认 Release |
 | PackageVersion | 指定模板包版本号 |
-| Install | 打包后自动安装模板 |
-| SmokeTest | 打包后自动安装并执行生成与编译验证 |
 
-示例：
+说明：
 
 ```powershell
-.\Templates\PekMvc.Template.Package\pack-template.ps1 -Install -SmokeTest
+.\Templates\PekMvc.Template.Package\pack-template.ps1
 ```
+
+如需安装或做 SmokeTest，请统一使用聚合模板包脚本。
 
 ## 创建项目模板
 
@@ -166,10 +157,10 @@ dotnet publish .\Output\DemoPekMvc\DemoPekMvc.csproj -c Release
 当前模板已完成以下验证：
 
 - 模板包可正常打包
-- 模板包可正常安装
+- 模板通过 PekBundle.Template 可正常安装
 - pekmvc 可正常生成并编译通过
 - pekmvc-sln 可正常生成并编译通过
-- pack-template.ps1 -Install -SmokeTest 已验证通过
+- 聚合模板包 pack-template.ps1 -Install -SmokeTest 已验证通过
 
 ## 常用命令
 
@@ -180,12 +171,8 @@ dotnet new pekmvc -h
 dotnet new pekmvc-sln -h
 ```
 
-重新安装本地最新模板包：
+统一安装最新模板包：
 
 ```powershell
-dotnet new uninstall PekMvc.Template
-Get-ChildItem .\Templates\PekMvc.Template.Package\bin\Release\PekMvc.Template.*.nupkg |
-  Sort-Object LastWriteTime -Descending |
-  Select-Object -First 1 -ExpandProperty FullName |
-  ForEach-Object { dotnet new install $_ }
+.\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -Install
 ```

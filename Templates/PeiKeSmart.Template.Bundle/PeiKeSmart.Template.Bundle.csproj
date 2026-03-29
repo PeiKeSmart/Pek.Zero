@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <PackageId>PeiKeSmart.Template.Bundle</PackageId>
-    <Title>PeiKeSmart.Template.Bundle</Title>
+    <PackageId>PekBundle.Template</PackageId>
+    <Title>PekBundle.Template</Title>
     <Description>PeiKeSmart aggregated dotnet new template package</Description>
     <Authors>PeiKeSmart</Authors>
     <PackageType>Template</PackageType>

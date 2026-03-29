@@ -1,0 +1,52 @@
+name: Templates Validation
+
+on:
+  push:
+    paths:
+      - '.github/copilot-instructions.md'
+      - '.github/instructions/template.instructions.md'
+      - '.github/workflows/templates-validation.yml'
+      - 'Templates/**'
+      - 'Mvc/PekMvc/.template.config/template.json'
+  pull_request:
+    paths:
+      - '.github/copilot-instructions.md'
+      - '.github/instructions/template.instructions.md'
+      - '.github/workflows/templates-validation.yml'
+      - 'Templates/**'
+      - 'Mvc/PekMvc/.template.config/template.json'
+  workflow_dispatch:
+
+jobs:
+  validate-templates:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          include-prerelease: true
+
+      - name: Check template conventions
+        shell: pwsh
+        run: .\Templates\check-template-conventions.ps1
+
+      - name: Pack install and smoke test bundle templates
+        shell: pwsh
+        run: .\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -Install -SmokeTest
+
+      - name: Verify template help commands
+        shell: pwsh
+        run: |
+          dotnet new pekmvc -h | Select-Object -First 5
+          if (!$?) { exit 1 }
+          dotnet new pekmvc-sln -h | Select-Object -First 5
+          if (!$?) { exit 1 }
+          dotnet new pekvuezero -h | Select-Object -First 5
+          if (!$?) { exit 1 }
+          dotnet new pekvuezero-sln -h | Select-Object -First 5
+          if (!$?) { exit 1 }

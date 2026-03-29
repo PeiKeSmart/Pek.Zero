@@ -12,7 +12,7 @@ Push-Location $PSScriptRoot
 try
 {
     $project = Join-Path $PSScriptRoot "PeiKeSmart.Template.Bundle.csproj"
-    $templatePackageIds = @("PeiKeSmart.Template.Bundle")
+    $templatePackageIds = @("PekBundle.Template", "PeiKeSmart.Template.Bundle", "PekVueZero.Template", "VueZero.Template")
     $templatesRoot = Join-Path $PSScriptRoot ".."
     $checkScript = Join-Path $templatesRoot "check-template-conventions.ps1"
 
@@ -46,7 +46,7 @@ try
     & dotnet @packArgs
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-    $nupkg = Get-ChildItem (Join-Path $PSScriptRoot "bin\$Configuration\PeiKeSmart.Template.Bundle.*.nupkg") |
+    $nupkg = Get-ChildItem (Join-Path $PSScriptRoot "bin\$Configuration\PekBundle.Template.*.nupkg") |
         Sort-Object LastWriteTime -Descending |
         Select-Object -First 1 -ExpandProperty FullName
 
@@ -72,7 +72,7 @@ try
 
     if ($SmokeTest)
     {
-        $tempRoot = Join-Path $env:TEMP "PeiKeSmart.Template.Bundle.Smoke"
+        $tempRoot = Join-Path $env:TEMP "PekBundle.Template.Smoke"
         if (Test-Path $tempRoot)
         {
             Remove-Item $tempRoot -Recurse -Force

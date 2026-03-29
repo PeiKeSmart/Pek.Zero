@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <PackageId>VueZero.Template</PackageId>
-    <Title>VueZero.Template</Title>
+    <PackageId>PekVueZero.Template</PackageId>
+    <Title>PekVueZero.Template</Title>
     <Description>VueZero dotnet new template package</Description>
     <Authors>PeiKeSmart</Authors>
     <PackageType>Template</PackageType>

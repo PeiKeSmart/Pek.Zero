@@ -81,6 +81,7 @@ foreach ($templatePackage in $templatePackages)
 {
     $readmePath = Join-Path $templatePackage.FullName "README.md"
     $packScriptPath = Join-Path $templatePackage.FullName "pack-template.ps1"
+    $projectFile = Get-ChildItem $templatePackage.FullName -File -Filter "*.csproj" | Select-Object -First 1
 
     if (!(Test-Path $readmePath))
     {
@@ -90,6 +91,49 @@ foreach ($templatePackage in $templatePackages)
     if (!(Test-Path $packScriptPath))
     {
         $errors.Add("Template package is missing pack-template.ps1: $($templatePackage.FullName)")
+    }
+
+    if ($projectFile)
+    {
+        $projectText = Get-Content $projectFile.FullName -Raw
+        $packageId = Get-MatchValue -Text $projectText -Pattern '<PackageId>\s*(?<value>[^<]+)\s*</PackageId>' -GroupName 'value'
+        $title = Get-MatchValue -Text $projectText -Pattern '<Title>\s*(?<value>[^<]+)\s*</Title>' -GroupName 'value'
+
+        if ([String]::IsNullOrWhiteSpace($packageId))
+        {
+            $errors.Add("Template package is missing PackageId: $($projectFile.FullName)")
+        }
+        elseif ($packageId -notmatch '^Pek[A-Za-z0-9]+\.Template$')
+        {
+            $errors.Add("Template package PackageId must match PekXxx.Template: $packageId ($($projectFile.FullName))")
+        }
+
+        if ([String]::IsNullOrWhiteSpace($title))
+        {
+            $errors.Add("Template package is missing Title: $($projectFile.FullName)")
+        }
+        elseif ($title -notmatch '^Pek[A-Za-z0-9]+\.Template$')
+        {
+            $errors.Add("Template package Title must match PekXxx.Template: $title ($($projectFile.FullName))")
+        }
+    }
+}
+
+$bundleProject = Join-Path $TemplatesRoot 'PeiKeSmart.Template.Bundle\PeiKeSmart.Template.Bundle.csproj'
+if (Test-Path $bundleProject)
+{
+    $bundleText = Get-Content $bundleProject -Raw
+    $bundlePackageId = Get-MatchValue -Text $bundleText -Pattern '<PackageId>\s*(?<value>[^<]+)\s*</PackageId>' -GroupName 'value'
+    $bundleTitle = Get-MatchValue -Text $bundleText -Pattern '<Title>\s*(?<value>[^<]+)\s*</Title>' -GroupName 'value'
+
+    if ($bundlePackageId -notmatch '^Pek[A-Za-z0-9]+\.Template$')
+    {
+        $errors.Add("Bundle PackageId must match PekXxx.Template: $bundlePackageId ($bundleProject)")
+    }
+
+    if ($bundleTitle -notmatch '^Pek[A-Za-z0-9]+\.Template$')
+    {
+        $errors.Add("Bundle Title must match PekXxx.Template: $bundleTitle ($bundleProject)")
     }
 }
 

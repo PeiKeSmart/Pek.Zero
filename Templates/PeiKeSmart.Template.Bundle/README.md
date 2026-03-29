@@ -13,6 +13,8 @@
 
 模板包项目：Templates/PeiKeSmart.Template.Bundle/PeiKeSmart.Template.Bundle.csproj
 
+模板包 ID：PekBundle.Template
+
 一键脚本：Templates/PeiKeSmart.Template.Bundle/pack-template.ps1
 
 ## 打包与安装
@@ -32,7 +34,7 @@ dotnet pack .\Templates\PeiKeSmart.Template.Bundle\PeiKeSmart.Template.Bundle.cs
 安装最新模板包：
 
 ```powershell
-Get-ChildItem .\Templates\PeiKeSmart.Template.Bundle\bin\Release\PeiKeSmart.Template.Bundle.*.nupkg |
+Get-ChildItem .\Templates\PeiKeSmart.Template.Bundle\bin\Release\PekBundle.Template.*.nupkg |
   Sort-Object LastWriteTime -Descending |
   Select-Object -First 1 -ExpandProperty FullName |
   ForEach-Object { dotnet new install $_ }
@@ -41,7 +43,7 @@ Get-ChildItem .\Templates\PeiKeSmart.Template.Bundle\bin\Release\PeiKeSmart.Temp
 卸载模板包：
 
 ```powershell
-dotnet new uninstall PeiKeSmart.Template.Bundle
+dotnet new uninstall PekBundle.Template
 ```
 
 ## 一键脚本
@@ -90,6 +92,8 @@ dotnet new uninstall PeiKeSmart.Template.Bundle
 ```powershell
 .\Templates\check-template-conventions.ps1
 ```
+
+仓库已提供自动校验工作流 [Templates Validation](.github/workflows/templates-validation.yml)。提交涉及 Templates 或模板指令的改动时，会自动执行规范检查、聚合安装、SmokeTest 生成编译验证和模板帮助验证。
 
 ## 常用命令
 
