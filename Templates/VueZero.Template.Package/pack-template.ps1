@@ -31,7 +31,8 @@ try
     & dotnet @packArgs
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-    $nupkg = Get-ChildItem (Join-Path $PSScriptRoot "bin\$Configuration\PekVueZero.Template.*.nupkg") |
+    $packageOutputRoot = Join-Path (Join-Path $PSScriptRoot "bin") $Configuration
+    $nupkg = Get-ChildItem (Join-Path $packageOutputRoot "PekVueZero.Template.*.nupkg") |
         Sort-Object LastWriteTime -Descending |
         Select-Object -First 1 -ExpandProperty FullName
 

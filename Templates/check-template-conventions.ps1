@@ -24,7 +24,7 @@ function Get-MatchValue
 }
 
 $templateDefinitions = Get-ChildItem $RepositoryRoot -Recurse -File -Filter "template.json" |
-    Where-Object { $_.FullName -like '*\.template.config\template.json' }
+    Where-Object { $_.FullName -match '[\\/]\.template\.config[\\/]template\.json$' }
 
 if (!$templateDefinitions)
 {
@@ -119,7 +119,7 @@ foreach ($templatePackage in $templatePackages)
     }
 }
 
-$bundleProject = Join-Path $TemplatesRoot 'PeiKeSmart.Template.Bundle\PeiKeSmart.Template.Bundle.csproj'
+$bundleProject = Join-Path (Join-Path $TemplatesRoot 'PeiKeSmart.Template.Bundle') 'PeiKeSmart.Template.Bundle.csproj'
 if (Test-Path $bundleProject)
 {
     $bundleText = Get-Content $bundleProject -Raw

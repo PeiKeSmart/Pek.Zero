@@ -46,7 +46,8 @@ try
     & dotnet @packArgs
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-    $nupkg = Get-ChildItem (Join-Path $PSScriptRoot "bin\$Configuration\PekBundle.Template.*.nupkg") |
+    $packageOutputRoot = Join-Path (Join-Path $PSScriptRoot "bin") $Configuration
+    $nupkg = Get-ChildItem (Join-Path $packageOutputRoot "PekBundle.Template.*.nupkg") |
         Sort-Object LastWriteTime -Descending |
         Select-Object -First 1 -ExpandProperty FullName
 
@@ -90,7 +91,8 @@ try
 
         & dotnet new pekmvc-sln -n DemoPekMvcSolution -o $pekSolutionOut -P Demo站点 -Pr Demo项目描述 -C DemoCompany -S DemoService -D DemoDb
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-        & dotnet build (Join-Path $pekSolutionOut "Mvc\DemoPekMvcSolution\DemoPekMvcSolution.csproj") -nologo
+        $pekSolutionProject = Join-Path (Join-Path (Join-Path $pekSolutionOut "Mvc") "DemoPekMvcSolution") "DemoPekMvcSolution.csproj"
+        & dotnet build $pekSolutionProject -nologo
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
         $vueProjectArgs = @(
@@ -108,7 +110,8 @@ try
         )
         & dotnet @vueProjectArgs
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-        & dotnet build (Join-Path $vueProjectOut "DemoPekVueZero.Server\DemoPekVueZero.Server.csproj") -nologo
+        $vueServerProject = Join-Path (Join-Path $vueProjectOut "DemoPekVueZero.Server") "DemoPekVueZero.Server.csproj"
+        & dotnet build $vueServerProject -nologo
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
         $vueSolutionArgs = @(

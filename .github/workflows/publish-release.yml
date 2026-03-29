@@ -69,7 +69,8 @@ jobs:
       - name: Publish release package
         shell: pwsh
         run: |
-          $package = Get-ChildItem .\Templates\PeiKeSmart.Template.Bundle\bin\Release\PekBundle.Template.$env:PACKAGE_VERSION.nupkg |
+          $packageOutputRoot = Join-Path (Join-Path (Join-Path '.' 'Templates') 'PeiKeSmart.Template.Bundle') 'bin/Release'
+          $package = Get-ChildItem (Join-Path $packageOutputRoot "PekBundle.Template.$env:PACKAGE_VERSION.nupkg") |
               Select-Object -First 1 -ExpandProperty FullName
 
           if ([String]::IsNullOrWhiteSpace($package))
