@@ -46,7 +46,7 @@ jobs:
 
           $chinaTimeZone = [System.TimeZoneInfo]::FindSystemTimeZoneById('China Standard Time')
           $now = [System.TimeZoneInfo]::ConvertTime([DateTimeOffset]::UtcNow, $chinaTimeZone)
-          $packageVersion = '{0}.{1}' -f $prefixMatch.Groups['prefix'].Value, $now.ToString('yyyy.MMdd-betaHHmm')
+          $packageVersion = '{0}.{1}-beta{2}' -f $prefixMatch.Groups['prefix'].Value, $now.ToString('yyyy.MMdd'), $now.ToString('HHmm')
           "PACKAGE_VERSION=$packageVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Validate templates
