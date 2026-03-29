@@ -84,13 +84,17 @@ jobs:
         shell: pwsh
         run: |
           $packageOutputRoot = Join-Path (Join-Path (Join-Path '.' 'Templates') 'PeiKeSmart.Template.Bundle') 'bin/Release'
-          $package = Get-ChildItem (Join-Path $packageOutputRoot "PekBundle.Template.$env:PACKAGE_VERSION.nupkg") |
+          $package = Get-ChildItem (Join-Path $packageOutputRoot 'PekBundle.Template.*.nupkg') |
+            Where-Object { $_.Name -notlike '*.snupkg' } |
+            Sort-Object LastWriteTime -Descending |
               Select-Object -First 1 -ExpandProperty FullName
 
           if ([String]::IsNullOrWhiteSpace($package))
           {
               throw "PekBundle.Template package was not found."
           }
+
+          Write-Host "Resolved package: $package"
 
           dotnet nuget push $package --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.nugetKey }}
           dotnet nuget push $package --skip-duplicate --source https://nuget.chuangchu.net/v3/index.json --api-key ${{ secrets.mynugetKey }}
