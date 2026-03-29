@@ -42,11 +42,11 @@ jobs:
 
       - name: Validate templates
         shell: pwsh
-        run: .\Templates\check-template-conventions.ps1
+        run: ./Templates/check-template-conventions.ps1
 
       - name: Pack install and smoke test bundle
         shell: pwsh
-        run: .\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -PackageVersion $env:PACKAGE_VERSION -Install -SmokeTest
+        run: ./Templates/PeiKeSmart.Template.Bundle/pack-template.ps1 -PackageVersion $env:PACKAGE_VERSION -Install -SmokeTest
 
       - name: Publish beta package
         shell: pwsh

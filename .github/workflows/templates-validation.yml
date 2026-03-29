@@ -19,7 +19,13 @@ on:
 
 jobs:
   validate-templates:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
 
     steps:
       - name: Checkout
@@ -33,11 +39,11 @@ jobs:
 
       - name: Check template conventions
         shell: pwsh
-        run: .\Templates\check-template-conventions.ps1
+        run: ./Templates/check-template-conventions.ps1
 
       - name: Pack install and smoke test bundle templates
         shell: pwsh
-        run: .\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -Install -SmokeTest
+        run: ./Templates/PeiKeSmart.Template.Bundle/pack-template.ps1 -Install -SmokeTest
 
       - name: Verify template help commands
         shell: pwsh

@@ -23,8 +23,11 @@ function Get-MatchValue
     return $match.Groups[$GroupName].Value.Trim()
 }
 
-$templateDefinitions = Get-ChildItem $RepositoryRoot -Recurse -File -Filter "template.json" |
-    Where-Object { $_.FullName -match '[\\/]\.template\.config[\\/]template\.json$' }
+$templateDefinitions = Get-ChildItem $RepositoryRoot -Recurse -File |
+    Where-Object {
+        $_.Name -ieq 'template.json' -and
+        $_.FullName -match '[\\/]\.template\.config[\\/]template\.json$'
+    }
 
 if (!$templateDefinitions)
 {
