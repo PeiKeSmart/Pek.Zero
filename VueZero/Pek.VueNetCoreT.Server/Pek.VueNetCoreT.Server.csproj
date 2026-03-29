@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DH.MySql" Version="4.21.2026.329-beta1145" />
     <PackageReference Include="DH.NRedis.Extensions" Version="4.21.2026.326-beta0856" />
 	<PackageReference Include="DH.NStardust.Extensions" Version="4.21.2026.326-beta0835" />
     <PackageReference Include="DH.Swagger" Version="4.17.2026.306-beta0113" />
