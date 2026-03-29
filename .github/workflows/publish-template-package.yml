@@ -1,0 +1,178 @@
+name: Publish Template Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseChannel:
+        description: Release channel
+        required: true
+        default: beta
+        type: choice
+        options:
+          - beta
+          - release
+      packageVersion:
+        description: Optional exact package version override
+        required: false
+        type: string
+      versionPrefix:
+        description: Optional major.minor prefix override, for example 1.0
+        required: false
+        type: string
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - '.github/copilot-instructions.md'
+      - '.github/instructions/template.instructions.md'
+      - '.github/workflows/publish-template-package.yml'
+      - 'Templates/**'
+      - 'Mvc/PekMvc/.template.config/template.json'
+    tags:
+      - 'template-v*'
+
+permissions:
+  contents: read
+
+jobs:
+  publish-pekbundle-template:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          include-prerelease: true
+
+      - name: Resolve package version
+        shell: pwsh
+        run: |
+          $packageVersion = "${{ inputs.packageVersion }}"
+          $versionPrefix = "${{ inputs.versionPrefix }}"
+          $releaseChannel = ""
+
+          if (!(Test-Path '.\Templates\PeiKeSmart.Template.Bundle\PeiKeSmart.Template.Bundle.csproj'))
+          {
+            throw 'Bundle project file was not found.'
+          }
+
+          if ([String]::IsNullOrWhiteSpace($versionPrefix))
+          {
+            [xml]$bundleProject = Get-Content '.\Templates\PeiKeSmart.Template.Bundle\PeiKeSmart.Template.Bundle.csproj' -Raw
+            $currentVersion = $bundleProject.Project.PropertyGroup.PackageVersion
+            if ([String]::IsNullOrWhiteSpace($currentVersion))
+            {
+              throw 'PackageVersion was not found in PekBundle.Template.csproj.'
+            }
+
+            if ($currentVersion -match '^(?<prefix>\d+\.\d+)\.\d{4}\.\d{4}(-beta\d{4})?$')
+            {
+              $versionPrefix = $Matches['prefix']
+            }
+            else
+            {
+              throw "Current package version does not match expected format: $currentVersion"
+            }
+          }
+
+          $chinaTz = [TimeZoneInfo]::FindSystemTimeZoneById('China Standard Time')
+          $chinaNow = [TimeZoneInfo]::ConvertTimeFromUtc([DateTime]::UtcNow, $chinaTz)
+
+          if ([String]::IsNullOrWhiteSpace($packageVersion))
+          {
+            if ("${{ github.event_name }}" -eq "workflow_dispatch")
+            {
+              $releaseChannel = "${{ inputs.releaseChannel }}"
+            }
+            elseif ("${{ github.ref_type }}" -eq "tag")
+            {
+              $releaseChannel = 'release'
+            }
+            else
+            {
+              $releaseChannel = 'beta'
+            }
+
+            if ($releaseChannel -eq 'release')
+            {
+              if ("${{ github.ref_type }}" -eq "tag")
+              {
+                $tagName = "${{ github.ref_name }}"
+                if (!$tagName.StartsWith('template-v'))
+                {
+                  throw 'Tag must start with template-v'
+                }
+
+                $packageVersion = $tagName.Substring('template-v'.Length)
+              }
+              else
+              {
+                $packageVersion = '{0}.{1}.{2}' -f $versionPrefix, $chinaNow.Year, $chinaNow.ToString('MMdd')
+              }
+            }
+            else
+            {
+              $packageVersion = '{0}.{1}.{2}-beta{3}' -f $versionPrefix, $chinaNow.Year, $chinaNow.ToString('MMdd'), $chinaNow.ToString('HHmm')
+            }
+          }
+          else
+          {
+            if ("${{ github.event_name }}" -eq "workflow_dispatch")
+            {
+              $releaseChannel = "${{ inputs.releaseChannel }}"
+            }
+            elseif ($packageVersion -match '-beta\d{4}$')
+            {
+              $releaseChannel = 'beta'
+            }
+            else
+            {
+              $releaseChannel = 'release'
+            }
+          }
+
+          if ([String]::IsNullOrWhiteSpace($packageVersion))
+          {
+            throw 'Package version is empty.'
+          }
+
+          if ($packageVersion -notmatch '^\d+\.\d+\.\d{4}\.\d{4}(-beta\d{4})?$')
+          {
+            throw "Package version does not match expected format: $packageVersion"
+          }
+
+          "RELEASE_CHANNEL=$releaseChannel" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "PACKAGE_VERSION=$packageVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Validate templates
+        shell: pwsh
+        run: .\Templates\check-template-conventions.ps1
+
+      - name: Pack install and smoke test bundle
+        shell: pwsh
+        run: .\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -PackageVersion $env:PACKAGE_VERSION -Install -SmokeTest
+
+      - name: Push PekBundle.Template to NuGet
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if ([String]::IsNullOrWhiteSpace($env:NUGET_API_KEY))
+          {
+              throw "NUGET_API_KEY secret is not configured."
+          }
+
+          $package = Get-ChildItem .\Templates\PeiKeSmart.Template.Bundle\bin\Release\PekBundle.Template.$env:PACKAGE_VERSION.nupkg |
+              Select-Object -First 1 -ExpandProperty FullName
+
+          if ([String]::IsNullOrWhiteSpace($package))
+          {
+              throw "PekBundle.Template package was not found."
+          }
+
+          dotnet nuget push $package --api-key $env:NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate

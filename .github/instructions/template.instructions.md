@@ -19,6 +19,7 @@ description: "Use when working on dotnet new template packages, template.json, p
 
 - 新增模板后必须保证聚合模板包一次安装即可提供全部模板
 - 对外只保留 `PekBundle.Template` 一种安装方式，单模板包不得再提供直接安装入口
+- 对外发布到 NuGet 时，也只允许发布 `PekBundle.Template`，禁止发布单模板包
 - 优先复用聚合模板包现有自动导入机制，不要手工复制模板内容形成第二份来源
 - 若新增模板需要新增校验规则，必须同步更新聚合模板包脚本
 

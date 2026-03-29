@@ -40,6 +40,18 @@ Get-ChildItem .\Templates\PeiKeSmart.Template.Bundle\bin\Release\PekBundle.Templ
   ForEach-Object { dotnet new install $_ }
 ```
 
+发布到 NuGet 后，也可以直接安装：
+
+```powershell
+dotnet new install PekBundle.Template
+```
+
+安装指定 beta 版本：
+
+```powershell
+dotnet new install PekBundle.Template::1.0.2026.0329-beta0906
+```
+
 卸载模板包：
 
 ```powershell
@@ -94,6 +106,21 @@ dotnet new uninstall PekBundle.Template
 ```
 
 仓库已提供自动校验工作流 [Templates Validation](.github/workflows/templates-validation.yml)。提交涉及 Templates 或模板指令的改动时，会自动执行规范检查、聚合安装、SmokeTest 生成编译验证和模板帮助验证。
+
+仓库还提供发布工作流 [Publish Template Package](.github/workflows/publish-template-package.yml)。
+
+- 推送模板相关更新到 `main` 或 `master` 时，默认自动发布 beta 版本
+- 推送 `template-v11.9.2026.0329` 这类 tag 时，自动发布正式版本
+- 手动触发时可选择 `beta` 或 `release`，也可以显式覆盖 `packageVersion`
+- 发布前会先执行规范检查、聚合安装和 SmokeTest
+- 仅发布 `PekBundle.Template`，不发布单模板包
+
+版本号规则与仓库约定保持一致：
+
+- 正式版：`{主}.{子}.{年}.{月日}`，例如 `1.0.2026.0329`
+- 测试版：`{主}.{子}.{年}.{月日}-beta{时分}`，例如 `1.0.2026.0329-beta0906`
+
+要使该工作流可用，需要在 GitHub 仓库 Secrets 中配置 `NUGET_API_KEY`。
 
 ## 常用命令
 
