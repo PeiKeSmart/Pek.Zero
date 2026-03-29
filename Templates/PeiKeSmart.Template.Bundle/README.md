@@ -107,20 +107,28 @@ dotnet new uninstall PekBundle.Template
 
 仓库已提供自动校验工作流 [Templates Validation](.github/workflows/templates-validation.yml)。提交涉及 Templates 或模板指令的改动时，会自动执行规范检查、聚合安装、SmokeTest 生成编译验证和模板帮助验证。
 
-仓库还提供发布工作流 [Publish Template Package](.github/workflows/publish-template-package.yml)。
+仓库还提供两个与现有项目风格一致的发布工作流：
 
-- 推送模板相关更新到 `main` 或 `master` 时，默认自动发布 beta 版本
-- 推送 `template-v11.9.2026.0329` 这类 tag 时，自动发布正式版本
-- 手动触发时可选择 `beta` 或 `release`，也可以显式覆盖 `packageVersion`
+- [publish-beta](.github/workflows/publish-beta.yml)
+- [publish-release](.github/workflows/publish-release.yml)
+
+- 推送模板相关更新到 `main` 或 `master` 时，`publish-beta` 会默认自动发布 beta 版本
+- 推送 `template-v1.0.2026.0329` 这类 tag 时，`publish-release` 会自动发布正式版本
+- 也可以手动触发 `publish-release`，并显式传入 `packageVersion`
 - 发布前会先执行规范检查、聚合安装和 SmokeTest
 - 仅发布 `PekBundle.Template`，不发布单模板包
+- 推送目标与现有项目一致：NuGet.org 与 `https://nuget.chuangchu.net/v3/index.json`
+- 推送使用的 Secrets 与现有项目一致：`nugetKey`、`mynugetKey`
 
 版本号规则与仓库约定保持一致：
 
 - 正式版：`{主}.{子}.{年}.{月日}`，例如 `1.0.2026.0329`
 - 测试版：`{主}.{子}.{年}.{月日}-beta{时分}`，例如 `1.0.2026.0329-beta0906`
 
-要使该工作流可用，需要在 GitHub 仓库 Secrets 中配置 `NUGET_API_KEY`。
+要使该工作流可用，需要在 GitHub 仓库 Secrets 中配置：
+
+- `nugetKey`
+- `mynugetKey`
 
 ## 常用命令
 

@@ -1,0 +1,81 @@
+name: publish-release
+
+on:
+  push:
+    tags:
+      - 'template-v*'
+  workflow_dispatch:
+    inputs:
+      packageVersion:
+        description: Release package version for PekBundle.Template
+        required: false
+        type: string
+
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup dotNET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
+
+      - name: Resolve release version
+        shell: bash
+        run: |
+          input_version="${{ inputs.packageVersion }}"
+          current_version=$(sed -n 's:.*<PackageVersion>\(.*\)</PackageVersion>.*:\1:p' Templates/PeiKeSmart.Template.Bundle/PeiKeSmart.Template.Bundle.csproj | head -n 1)
+          if [[ ! "$current_version" =~ ^([0-9]+\.[0-9]+)\.[0-9]{4}\.[0-9]{4}(-beta[0-9]{4})?$ ]]; then
+            echo "Unexpected PackageVersion format: $current_version"
+            exit 1
+          fi
+
+          prefix="${BASH_REMATCH[1]}"
+          if [[ -n "$input_version" ]]; then
+            package_version="$input_version"
+          elif [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            tag_name="${GITHUB_REF_NAME}"
+            if [[ "$tag_name" != template-v* ]]; then
+              echo "Tag must start with template-v"
+              exit 1
+            fi
+
+            package_version="${tag_name#template-v}"
+          else
+            package_version="${prefix}.$(TZ='Asia/Shanghai' date +'%Y.%m%d')"
+          fi
+
+          if [[ ! "$package_version" =~ ^[0-9]+\.[0-9]+\.[0-9]{4}\.[0-9]{4}$ ]]; then
+            echo "Release version does not match expected format: $package_version"
+            exit 1
+          fi
+
+          echo "PACKAGE_VERSION=$package_version" >> "$GITHUB_ENV"
+
+      - name: Validate templates
+        shell: pwsh
+        run: .\Templates\check-template-conventions.ps1
+
+      - name: Pack install and smoke test bundle
+        shell: pwsh
+        run: .\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -PackageVersion $env:PACKAGE_VERSION -Install -SmokeTest
+
+      - name: Publish release package
+        shell: pwsh
+        run: |
+          $package = Get-ChildItem .\Templates\PeiKeSmart.Template.Bundle\bin\Release\PekBundle.Template.$env:PACKAGE_VERSION.nupkg |
+              Select-Object -First 1 -ExpandProperty FullName
+
+          if ([String]::IsNullOrWhiteSpace($package))
+          {
+              throw "PekBundle.Template package was not found."
+          }
+
+          dotnet nuget push $package --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.nugetKey }}
+          dotnet nuget push $package --skip-duplicate --source https://nuget.chuangchu.net/v3/index.json --api-key ${{ secrets.mynugetKey }}

@@ -1,0 +1,63 @@
+name: publish-beta
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '.github/copilot-instructions.md'
+      - '.github/instructions/template.instructions.md'
+      - '.github/workflows/publish-beta.yml'
+      - '.github/workflows/publish-release.yml'
+      - 'Templates/**'
+      - 'Mvc/PekMvc/.template.config/template.json'
+  workflow_dispatch:
+
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup dotNET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
+
+      - name: Resolve beta version
+        shell: bash
+        run: |
+          current_version=$(sed -n 's:.*<PackageVersion>\(.*\)</PackageVersion>.*:\1:p' Templates/PeiKeSmart.Template.Bundle/PeiKeSmart.Template.Bundle.csproj | head -n 1)
+          if [[ ! "$current_version" =~ ^([0-9]+\.[0-9]+)\.[0-9]{4}\.[0-9]{4}(-beta[0-9]{4})?$ ]]; then
+            echo "Unexpected PackageVersion format: $current_version"
+            exit 1
+          fi
+
+          prefix="${BASH_REMATCH[1]}"
+          package_version="${prefix}.$(TZ='Asia/Shanghai' date +'%Y.%m%d-beta%H%M')"
+          echo "PACKAGE_VERSION=$package_version" >> "$GITHUB_ENV"
+
+      - name: Validate templates
+        shell: pwsh
+        run: .\Templates\check-template-conventions.ps1
+
+      - name: Pack install and smoke test bundle
+        shell: pwsh
+        run: .\Templates\PeiKeSmart.Template.Bundle\pack-template.ps1 -PackageVersion $env:PACKAGE_VERSION -Install -SmokeTest
+
+      - name: Publish beta package
+        shell: pwsh
+        run: |
+          $package = Get-ChildItem .\Templates\PeiKeSmart.Template.Bundle\bin\Release\PekBundle.Template.$env:PACKAGE_VERSION.nupkg |
+              Select-Object -First 1 -ExpandProperty FullName
+
+          if ([String]::IsNullOrWhiteSpace($package))
+          {
+              throw "PekBundle.Template package was not found."
+          }
+
+          dotnet nuget push $package --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.nugetKey }}
+          dotnet nuget push $package --skip-duplicate --source https://nuget.chuangchu.net/v3/index.json --api-key ${{ secrets.mynugetKey }}
