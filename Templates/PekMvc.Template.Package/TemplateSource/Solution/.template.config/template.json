@@ -70,9 +70,7 @@
         ".template.config/**",
         "**/*.user",
         "**/*.lock.json",
-        "**/Properties/PublishProfiles/**",
-        "**/wwwroot/db_backups/**",
-        "**/wwwroot/sitemaps/**"
+        "**/Properties/PublishProfiles/**"
       ]
     }
   ]
