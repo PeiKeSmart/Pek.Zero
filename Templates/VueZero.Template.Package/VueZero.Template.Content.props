@@ -1,0 +1,24 @@
+<Project>
+
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)TemplateSource\Project\**\*"
+             Exclude="$(MSBuildThisFileDirectory)TemplateSource\Project\.template.config\**;$(MSBuildThisFileDirectory)TemplateSource\Project\**\bin\**;$(MSBuildThisFileDirectory)TemplateSource\Project\**\obj\**;$(MSBuildThisFileDirectory)TemplateSource\Project\**\node_modules\**;$(MSBuildThisFileDirectory)TemplateSource\Project\**\*.user;$(MSBuildThisFileDirectory)TemplateSource\Project\**\.vscode\**"
+             Pack="true"
+             PackagePath="content\VueZero\" />
+    <Content Include="$(MSBuildThisFileDirectory)TemplateSource\Project\.template.config\template.json"
+             Pack="true"
+             PackagePath="content\VueZero\.template.config\template.json" />
+
+    <Content Include="$(MSBuildThisFileDirectory)TemplateSource\Project\**\*"
+             Exclude="$(MSBuildThisFileDirectory)TemplateSource\Project\.template.config\**;$(MSBuildThisFileDirectory)TemplateSource\Project\**\bin\**;$(MSBuildThisFileDirectory)TemplateSource\Project\**\obj\**;$(MSBuildThisFileDirectory)TemplateSource\Project\**\node_modules\**;$(MSBuildThisFileDirectory)TemplateSource\Project\**\*.user;$(MSBuildThisFileDirectory)TemplateSource\Project\**\.vscode\**"
+             Pack="true"
+             PackagePath="content\VueZero.Solution\" />
+    <Content Include="$(MSBuildThisFileDirectory)TemplateSource\Solution\.template.config\template.json"
+             Pack="true"
+             PackagePath="content\VueZero.Solution\.template.config\template.json" />
+    <Content Include="$(MSBuildThisFileDirectory)TemplateSource\Solution\VueZero.slnx"
+             Pack="true"
+             PackagePath="content\VueZero.Solution\VueZero.slnx" />
+  </ItemGroup>
+
+</Project>

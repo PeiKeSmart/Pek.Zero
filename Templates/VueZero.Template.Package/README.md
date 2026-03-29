@@ -1,11 +1,11 @@
-# VueZero 模板说明
+# PekVueZero 模板说明
 
 ## 概述
 
-该目录提供一套基于 VueZero 的 dotnet new 模板包，包含以下两个模板：
+该目录提供一套基于 PekVueZero 的 dotnet new 模板包，包含以下两个模板：
 
-- vuezero：生成 Vue 3 + Vite + ASP.NET Core 的前后端项目骨架
-- vuezero-sln：生成带解决方案文件的完整骨架
+- pekvuezero：生成 Vue 3 + Vite + ASP.NET Core 的前后端项目骨架
+- pekvuezero-sln：生成带解决方案文件的完整骨架
 
 模板包项目：Templates/VueZero.Template.Package/VueZero.Template.Package.csproj
 
@@ -73,19 +73,19 @@ dotnet new uninstall VueZero.Template
 最小命令：
 
 ```powershell
-dotnet new vuezero -n DemoVueZero -o .\Output\DemoVueZero
+dotnet new pekvuezero -n DemoPekVueZero -o .\Output\DemoPekVueZero
 ```
 
 完整示例：
 
 ```powershell
-dotnet new vuezero -n DemoVueZero -o .\Output\DemoVueZero --ProjectTitle DemoApp --ProjectDescription "Demo full stack template" --CompanyName DemoCompany --ServiceName DemoVueZero.Service --ServerHttpPort 5217 --ServerHttpsPort 7372 --ClientDevPort 53017 --ClientPackageName demo.client
+dotnet new pekvuezero -n DemoPekVueZero -o .\Output\DemoPekVueZero --ProjectTitle DemoApp --ProjectDescription "Demo full stack template" --CompanyName DemoCompany --ServiceName DemoPekVueZero.Service --ServerHttpPort 5217 --ServerHttpsPort 7372 --ClientDevPort 53017 --ClientPackageName demo.client
 ```
 
 生成后可编译后端：
 
 ```powershell
-dotnet build .\Output\DemoVueZero\DemoVueZero.Server\DemoVueZero.Server.csproj -nologo
+dotnet build .\Output\DemoPekVueZero\DemoPekVueZero.Server\DemoPekVueZero.Server.csproj -nologo
 ```
 
 ## 创建解决方案模板
@@ -93,19 +93,19 @@ dotnet build .\Output\DemoVueZero\DemoVueZero.Server\DemoVueZero.Server.csproj -
 最小命令：
 
 ```powershell
-dotnet new vuezero-sln -n DemoVueZero -o .\Output\DemoVueZero
+dotnet new pekvuezero-sln -n DemoPekVueZero -o .\Output\DemoPekVueZero
 ```
 
 完整示例：
 
 ```powershell
-dotnet new vuezero-sln -n DemoVueZero -o .\Output\DemoVueZero --ProjectTitle DemoApp --ProjectDescription "Demo full stack template" --CompanyName DemoCompany --ServiceName DemoVueZero.Service --ServerHttpPort 5217 --ServerHttpsPort 7372 --ClientDevPort 53017 --ClientPackageName demo.client
+dotnet new pekvuezero-sln -n DemoPekVueZero -o .\Output\DemoPekVueZero --ProjectTitle DemoApp --ProjectDescription "Demo full stack template" --CompanyName DemoCompany --ServiceName DemoPekVueZero.Service --ServerHttpPort 5217 --ServerHttpsPort 7372 --ClientDevPort 53017 --ClientPackageName demo.client
 ```
 
 生成后可编译整个解决方案：
 
 ```powershell
-dotnet build .\Output\DemoVueZero\DemoVueZero.slnx -nologo
+dotnet build .\Output\DemoPekVueZero\DemoPekVueZero.slnx -nologo
 ```
 
 ## 生成后如何启动
@@ -115,7 +115,7 @@ dotnet build .\Output\DemoVueZero\DemoVueZero.slnx -nologo
 在后端项目目录执行：
 
 ```powershell
-cd .\Output\DemoVueZero\DemoVueZero.Server
+cd .\Output\DemoPekVueZero\DemoPekVueZero.Server
 dotnet run
 ```
 
@@ -134,7 +134,7 @@ dotnet run
 在前端项目目录执行：
 
 ```powershell
-cd .\Output\DemoVueZero\DemoVueZero.Client
+cd .\Output\DemoPekVueZero\DemoPekVueZero.Client
 npm install
 npm run dev
 ```
@@ -147,8 +147,8 @@ npm run dev
 
 推荐顺序：
 
-1. 先启动后端 DemoVueZero.Server
-2. 再启动前端 DemoVueZero.Client
+1. 先启动后端 DemoPekVueZero.Server
+2. 再启动前端 DemoPekVueZero.Client
 3. 浏览器访问前端 Vite 地址进行联调
 
 前端开发代理会根据后端启动参数自动转发到 ASP.NET Core 服务。
@@ -183,8 +183,8 @@ npm run dev
 
 - 模板包可正常打包
 - 模板包可正常安装
-- vuezero 可正常生成并编译通过
-- vuezero-sln 可正常生成并编译通过
+- pekvuezero 可正常生成并编译通过
+- pekvuezero-sln 可正常生成并编译通过
 - pack-template.ps1 -Install -SmokeTest 已验证通过
 
 ## 常用命令
@@ -192,8 +192,8 @@ npm run dev
 查看模板帮助：
 
 ```powershell
-dotnet new vuezero -h
-dotnet new vuezero-sln -h
+dotnet new pekvuezero -h
+dotnet new pekvuezero-sln -h
 ```
 
 重新安装本地最新模板包：

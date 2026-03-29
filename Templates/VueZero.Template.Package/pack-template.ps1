@@ -29,7 +29,14 @@ try
 
     if ($Install -or $SmokeTest)
     {
-        & dotnet new uninstall VueZero.Template | Out-Null
+        try
+        {
+            & dotnet new uninstall VueZero.Template *>$null
+        }
+        catch
+        {
+            $LASTEXITCODE = 0
+        }
         & dotnet new install $nupkg
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     }
@@ -46,13 +53,13 @@ try
         $solutionOut = Join-Path $tempRoot "solution"
 
         $projectArgs = @(
-            'new', 'vuezero',
-            '-n', 'DemoVueZero',
+            'new', 'pekvuezero',
+            '-n', 'DemoPekVueZero',
             '-o', $projectOut,
             '--ProjectTitle', 'DemoApp',
             '--ProjectDescription', 'Demo full stack template',
             '--CompanyName', 'DemoCompany',
-            '--ServiceName', 'DemoVueZero.Service',
+            '--ServiceName', 'DemoPekVueZero.Service',
             '--ServerHttpPort', '5217',
             '--ServerHttpsPort', '7372',
             '--ClientDevPort', '53017',
@@ -60,17 +67,17 @@ try
         )
         & dotnet @projectArgs
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-        & dotnet build (Join-Path $projectOut "DemoVueZero.Server\DemoVueZero.Server.csproj") -nologo
+        & dotnet build (Join-Path $projectOut "DemoPekVueZero.Server\DemoPekVueZero.Server.csproj") -nologo
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
         $solutionArgs = @(
-            'new', 'vuezero-sln',
-            '-n', 'DemoVueZero',
+            'new', 'pekvuezero-sln',
+            '-n', 'DemoPekVueZero',
             '-o', $solutionOut,
             '--ProjectTitle', 'DemoApp',
             '--ProjectDescription', 'Demo full stack template',
             '--CompanyName', 'DemoCompany',
-            '--ServiceName', 'DemoVueZero.Service',
+            '--ServiceName', 'DemoPekVueZero.Service',
             '--ServerHttpPort', '5217',
             '--ServerHttpsPort', '7372',
             '--ClientDevPort', '53017',
@@ -78,7 +85,7 @@ try
         )
         & dotnet @solutionArgs
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-        & dotnet build (Join-Path $solutionOut "DemoVueZero.slnx") -nologo
+        & dotnet build (Join-Path $solutionOut "DemoPekVueZero.slnx") -nologo
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     }
 }

@@ -29,7 +29,14 @@ try
 
     if ($Install -or $SmokeTest)
     {
-        dotnet new uninstall PekMvc.Template | Out-Null
+        try
+        {
+            dotnet new uninstall PekMvc.Template *>$null
+        }
+        catch
+        {
+            $LASTEXITCODE = 0
+        }
         dotnet new install $nupkg
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     }

@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <PackageId>VueZero.Template</PackageId>
-    <Title>VueZero.Template</Title>
-    <Description>VueZero dotnet new template package</Description>
+    <PackageId>PeiKeSmart.Template.Bundle</PackageId>
+    <Title>PeiKeSmart.Template.Bundle</Title>
+    <Description>PeiKeSmart aggregated dotnet new template package</Description>
     <Authors>PeiKeSmart</Authors>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.2026.0317</PackageVersion>
+    <PackageVersion>1.0.2026.0329</PackageVersion>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeContentInPack>true</IncludeContentInPack>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -16,6 +16,6 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <Import Project="VueZero.Template.Content.props" />
+  <Import Project="..\*.Template.Package\*.Template.Content.props" />
 
 </Project>

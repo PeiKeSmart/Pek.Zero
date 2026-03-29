@@ -8,8 +8,8 @@
     "Pek"
   ],
   "identity": "PeiKeSmart.VueZero.Web",
-  "name": "VueZero 前后端项目模板",
-  "shortName": "vuezero",
+  "name": "PekVueZero 前后端项目模板",
+  "shortName": "pekvuezero",
   "sourceName": "VueZero",
   "preferNameDirectory": true,
   "primaryOutputs": [

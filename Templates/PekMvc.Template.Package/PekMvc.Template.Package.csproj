@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <PackageId>PekMvc.Template</PackageId>
     <Title>PekMvc.Template</Title>
-    <Description>基于 PekMvc 的 dotnet new 项目模板包</Description>
+    <Description>PekMvc dotnet new template package</Description>
     <Authors>PeiKeSmart</Authors>
     <PackageType>Template</PackageType>
     <PackageVersion>1.1.2026.0317</PackageVersion>
@@ -16,91 +16,6 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="..\..\Mvc\PekMvc\**\*"
-             Exclude="..\..\Mvc\PekMvc\bin\**;..\..\Mvc\PekMvc\obj\**;..\..\Mvc\PekMvc\.template.config\**;..\..\Mvc\PekMvc\PekMvc.csproj;..\..\Mvc\PekMvc\Program.cs;..\..\Mvc\PekMvc\appsettings.json;..\..\Mvc\PekMvc\Common\PekSettings.cs;..\..\Mvc\PekMvc\Common\PekStartup.cs;..\..\Mvc\PekMvc\Entity\Model.xml;..\..\Mvc\PekMvc\Entity\单页文章.cs;..\..\Mvc\PekMvc\Entity\单页文章翻译.cs;..\..\Mvc\PekMvc\Entity\上传文件表.cs;..\..\Mvc\PekMvc\Entity\用户扩展表.cs;..\..\Mvc\PekMvc\Properties\launchSettings.json;..\..\Mvc\PekMvc\Properties\PublishProfiles\**;..\..\Mvc\PekMvc\wwwroot\db_backups\**;..\..\Mvc\PekMvc\wwwroot\sitemaps\**;..\..\Mvc\PekMvc\**\*.user"
-             Pack="true"
-             PackagePath="content\PekMvc\" />
-    <Content Include="..\..\Mvc\PekMvc\.template.config\template.json"
-             Pack="true"
-             PackagePath="content\PekMvc\.template.config\template.json" />
-    <Content Include="TemplateSource\PekMvc.csproj"
-             Pack="true"
-             PackagePath="content\PekMvc\PekMvc.csproj" />
-    <Content Include="TemplateSource\Project\Program.cs"
-             Pack="true"
-             PackagePath="content\PekMvc\Program.cs" />
-    <Content Include="TemplateSource\Project\appsettings.json"
-             Pack="true"
-             PackagePath="content\PekMvc\appsettings.json" />
-    <Content Include="TemplateSource\Project\Common\PekSettings.cs"
-             Pack="true"
-             PackagePath="content\PekMvc\Common\PekSettings.cs" />
-    <Content Include="TemplateSource\Project\Common\PekStartup.cs"
-             Pack="true"
-             PackagePath="content\PekMvc\Common\PekStartup.cs" />
-    <Content Include="TemplateSource\Project\Entity\Model.xml"
-             Pack="true"
-             PackagePath="content\PekMvc\Entity\Model.xml" />
-    <Content Include="TemplateSource\Project\Entity\单页文章.cs"
-             Pack="true"
-             PackagePath="content\PekMvc\Entity\单页文章.cs" />
-    <Content Include="TemplateSource\Project\Entity\单页文章翻译.cs"
-             Pack="true"
-             PackagePath="content\PekMvc\Entity\单页文章翻译.cs" />
-    <Content Include="TemplateSource\Project\Entity\上传文件表.cs"
-             Pack="true"
-             PackagePath="content\PekMvc\Entity\上传文件表.cs" />
-    <Content Include="TemplateSource\Project\Entity\用户扩展表.cs"
-             Pack="true"
-             PackagePath="content\PekMvc\Entity\用户扩展表.cs" />
-    <Content Include="TemplateSource\Project\Properties\launchSettings.json"
-             Pack="true"
-             PackagePath="content\PekMvc\Properties\launchSettings.json" />
-
-    <Content Include="..\..\Mvc\PekMvc\**\*"
-             Exclude="..\..\Mvc\PekMvc\bin\**;..\..\Mvc\PekMvc\obj\**;..\..\Mvc\PekMvc\.template.config\**;..\..\Mvc\PekMvc\PekMvc.csproj;..\..\Mvc\PekMvc\Program.cs;..\..\Mvc\PekMvc\appsettings.json;..\..\Mvc\PekMvc\Common\PekSettings.cs;..\..\Mvc\PekMvc\Common\PekStartup.cs;..\..\Mvc\PekMvc\Entity\Model.xml;..\..\Mvc\PekMvc\Entity\单页文章.cs;..\..\Mvc\PekMvc\Entity\单页文章翻译.cs;..\..\Mvc\PekMvc\Entity\上传文件表.cs;..\..\Mvc\PekMvc\Entity\用户扩展表.cs;..\..\Mvc\PekMvc\Properties\launchSettings.json;..\..\Mvc\PekMvc\Properties\PublishProfiles\**;..\..\Mvc\PekMvc\wwwroot\db_backups\**;..\..\Mvc\PekMvc\wwwroot\sitemaps\**;..\..\Mvc\PekMvc\**\*.user"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\" />
-    <Content Include="TemplateSource\Solution\.template.config\template.json"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\.template.config\template.json" />
-    <Content Include="TemplateSource\Solution\PekMvc.slnx"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\PekMvc.slnx" />
-    <Content Include="TemplateSource\PekMvc.csproj"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\PekMvc.csproj" />
-    <Content Include="TemplateSource\Project\Program.cs"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Program.cs" />
-    <Content Include="TemplateSource\Project\appsettings.json"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\appsettings.json" />
-    <Content Include="TemplateSource\Project\Common\PekSettings.cs"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Common\PekSettings.cs" />
-    <Content Include="TemplateSource\Project\Common\PekStartup.cs"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Common\PekStartup.cs" />
-    <Content Include="TemplateSource\Project\Entity\Model.xml"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Entity\Model.xml" />
-    <Content Include="TemplateSource\Project\Entity\单页文章.cs"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Entity\单页文章.cs" />
-    <Content Include="TemplateSource\Project\Entity\单页文章翻译.cs"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Entity\单页文章翻译.cs" />
-    <Content Include="TemplateSource\Project\Entity\上传文件表.cs"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Entity\上传文件表.cs" />
-    <Content Include="TemplateSource\Project\Entity\用户扩展表.cs"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Entity\用户扩展表.cs" />
-    <Content Include="TemplateSource\Project\Properties\launchSettings.json"
-             Pack="true"
-             PackagePath="content\PekMvc.Solution\Mvc\PekMvc\Properties\launchSettings.json" />
-  </ItemGroup>
+  <Import Project="PekMvc.Template.Content.props" />
 
 </Project>
