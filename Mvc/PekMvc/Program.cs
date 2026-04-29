@@ -46,6 +46,15 @@ star?.SetWatchdog(120);
 
 // 分布式服务，使用配置中心RedisCache配置
 ObjectContainer.Current.AddSingleton<ICacheProvider, RedisCacheProvider>();
+// 缓存
+if (RedisSetting.Current.IsUseRedisCache)
+{
+    ObjectContainer.Current.TryAddSingleton<ICache>(new FullRedis(RedisSetting.Current.RedisConnectionString, RedisSetting.Current.RedisPassWord!, RedisSetting.Current.RedisDatabaseId));
+}
+else
+{
+    ObjectContainer.Current.TryAddSingleton(Cache.Default);
+}
 
 // 修改上传的文件大小限制
 DHSetting.Current.MaxSize = 200;

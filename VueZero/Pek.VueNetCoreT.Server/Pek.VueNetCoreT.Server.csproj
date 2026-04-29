@@ -12,15 +12,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DH.MySql" Version="4.21.2026.329-beta1145" />
-    <PackageReference Include="DH.NRedis.Extensions" Version="4.21.2026.326-beta0856" />
+    <PackageReference Include="DH.MySql" Version="4.22.2026.427-beta0409" />
+    <PackageReference Include="DH.NRedis.Extensions" Version="4.21.2026.412-beta1220" />
 	<PackageReference Include="DH.NStardust.Extensions" Version="4.21.2026.326-beta0835" />
-    <PackageReference Include="DH.Swagger" Version="4.17.2026.306-beta0113" />
+    <PackageReference Include="DH.Swagger" Version="4.22.2026.415-beta1035" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
-      <Version>10.0.5</Version>
+      <Version>10.0.7</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
-    <PackageReference Include="Pek.NCube.Api" Version="4.16.2026.326-beta0940" />
+    <PackageReference Include="Pek.NCube.Api" Version="4.22.2026.429-beta0044" />
     <PackageReference Include="PekVue.FrameWrok" Version="4.13.2025.705-beta0822" />
   </ItemGroup>
 

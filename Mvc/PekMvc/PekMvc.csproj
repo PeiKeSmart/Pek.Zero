@@ -27,18 +27,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DH.MySql" Version="4.21.2026.329-beta1145" />
-    <PackageReference Include="DH.NCode" Version="4.21.2026.326-beta0743" />
-    <PackageReference Include="DH.NRedis.Extensions" Version="4.21.2026.326-beta0856" />
+    <PackageReference Include="DH.MySql" Version="4.22.2026.427-beta0409" />
+    <PackageReference Include="DH.NCode" Version="4.22.2026.429-beta0032" />
+    <PackageReference Include="DH.NRedis.Extensions" Version="4.21.2026.412-beta1220" />
     <PackageReference Include="DH.NStardust.Extensions" Version="4.21.2026.326-beta0835" />
-    <PackageReference Include="DH.SLazyCaptcha" Version="4.18.2026.211" />
-    <PackageReference Include="Pek.AspNetCore" Version="4.18.2026.326-beta0933" />
-    <PackageReference Include="Pek.Common" Version="4.20.2026.326-beta0931" />
-    <PackageReference Include="Pek.NCubeUI" Version="4.16.2026.326-beta0940" />
+    <PackageReference Include="DH.SLazyCaptcha" Version="4.22.2026.415-beta1046" />
+    <PackageReference Include="Pek.AspNetCore" Version="4.22.2026.416-beta1026" />
+    <PackageReference Include="Pek.Common" Version="4.22.2026.416-beta1017" />
+    <PackageReference Include="Pek.NCubeUI" Version="4.22.2026.429-beta0044" />
   </ItemGroup>
 	
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.7" />
   </ItemGroup>
 
   <ItemGroup>
