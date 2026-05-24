@@ -133,6 +133,16 @@ dotnet build .\Output\DemoPekMvc\DemoPekMvc.csproj -nologo
 dotnet publish .\Output\DemoPekMvc\DemoPekMvc.csproj -c Release
 ```
 
+### IPekStartup 生命周期约定
+
+模板生成后的项目默认通过 `Common/PekStartup.cs` 接入 `IPekStartup` 生命周期。
+
+- `ConfigureMiddleware(IApplicationBuilder application)`：注册普通业务中间件的默认位置，例如 `UseMiddleware<T>()`、`UseWhen(...)`、`MapWhen(...)`
+- `BeforeRouting(IApplicationBuilder application)`：仅用于必须发生在 `UseRouting` 之前的特殊处理，不要把普通业务中间件默认放到这里
+- `AfterAuth(IApplicationBuilder application)`：仅用于必须依赖认证或授权结果、且需要发生在 Endpoints 之前的处理
+
+如果只是给生成后的项目新增自定义 URL 解析、请求归一化、租户识别、仓库路径改写等常规中间件，优先放到 `ConfigureMiddleware`，不要因为方法名接近就误挂到 `BeforeRouting`。
+
 ## 模板参数
 
 - ProjectTitle：默认值为“工具网站”，站点标题，同时写入程序集标题和默认站点标题
