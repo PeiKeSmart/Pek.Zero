@@ -28,8 +28,10 @@
 只打包不安装：
 
 ```powershell
-dotnet pack .\Templates\PeiKeSmart.Template.Bundle\PeiKeSmart.Template.Bundle.csproj -c Release
+dotnet pack .\Templates\PeiKeSmart.Template.Bundle\PeiKeSmart.Template.Bundle.csproj -c Release /p:PackageVersion=1.0.2026.0524
 ```
+
+更推荐直接使用聚合脚本；若省略 `/p:PackageVersion=...`，`dotnet pack` 会沿用项目文件中的固定版本号。
 
 安装最新模板包：
 
@@ -49,7 +51,13 @@ dotnet new install PekBundle.Template
 安装指定 beta 版本：
 
 ```powershell
-dotnet new install PekBundle.Template::1.0.2026.0329-beta0906
+dotnet new install PekBundle.Template::<PackageVersion>
+```
+
+例如：
+
+```powershell
+dotnet new install PekBundle.Template::1.0.2026.0524-beta1530
 ```
 
 卸载模板包：
@@ -62,12 +70,10 @@ dotnet new uninstall PekBundle.Template
 
 脚本支持以下参数：
 
-| 参数 | 说明 |
-|------|------|
-| Configuration | 打包配置，默认 Release |
-| PackageVersion | 指定模板包版本号 |
-| Install | 打包后自动安装模板 |
-| SmokeTest | 打包后自动安装并执行生成与编译验证 |
+- Configuration：打包配置，默认 Release
+- PackageVersion：指定模板包版本号；未指定时脚本会按中国时区自动生成当天正式版号
+- Install：打包后自动安装模板
+- SmokeTest：打包后自动安装并执行生成与编译验证
 
 示例：
 
@@ -76,6 +82,10 @@ dotnet new uninstall PekBundle.Template
 ```
 
 执行安装时，脚本会先尝试卸载聚合包以及 Templates 目录下现有的单模板包，避免本机同时保留相同模板 identity 而出现重复警告。
+
+若未显式传入 `-PackageVersion`，聚合脚本会自动生成当天版本号，格式为 `{主}.{子}.{年}.{月日}`，例如 `1.0.2026.0524`。这用于避免本地打包安装时继续沿用项目文件中的历史日期版本。
+
+注意：NuGet 在 `.nupkg` 文件名或部分输出中可能会把 `1.0.2026.0524` 规范化显示为 `1.0.2026.524`，这是标准行为，不代表日期丢失。
 
 在打包前，脚本会先执行 `Templates/check-template-conventions.ps1`，检查模板显示名、短名、重复项以及模板包必需文件是否符合规范。
 
@@ -113,7 +123,7 @@ dotnet new uninstall PekBundle.Template
 - [publish-release](.github/workflows/publish-release.yml)
 
 - 推送模板相关更新到 `main` 或 `master` 时，`publish-beta` 会默认自动发布 beta 版本
-- 推送 `template-v1.0.2026.0329` 这类 tag 时，`publish-release` 会自动发布正式版本
+- 推送 `template-v{版本号}` 这类 tag 时，`publish-release` 会自动发布正式版本，例如 `template-v1.0.2026.0524`
 - 也可以手动触发 `publish-release`，并显式传入 `packageVersion`
 - 发布前会先执行规范检查、聚合安装和 SmokeTest
 - 仅发布 `PekBundle.Template`，不发布单模板包
@@ -122,8 +132,8 @@ dotnet new uninstall PekBundle.Template
 
 版本号规则与仓库约定保持一致：
 
-- 正式版：`{主}.{子}.{年}.{月日}`，例如 `1.0.2026.0329`
-- 测试版：`{主}.{子}.{年}.{月日}-beta{时分}`，例如 `1.0.2026.0329-beta0906`
+- 正式版：`{主}.{子}.{年}.{月日}`，例如 `1.0.2026.0524`
+- 测试版：`{主}.{子}.{年}.{月日}-beta{时分}`，例如 `1.0.2026.0524-beta1530`
 
 要使该工作流可用，需要在 GitHub 仓库 Secrets 中配置：
 

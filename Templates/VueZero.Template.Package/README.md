@@ -35,8 +35,10 @@
 只打包不安装：
 
 ```powershell
-dotnet pack .\Templates\VueZero.Template.Package\VueZero.Template.Package.csproj -c Release
+dotnet pack .\Templates\VueZero.Template.Package\VueZero.Template.Package.csproj -c Release /p:PackageVersion=1.0.2026.0524
 ```
+
+更推荐直接使用该目录下的脚本；若省略 `/p:PackageVersion=...`，`dotnet pack` 会沿用项目文件中的固定版本号。
 
 该模板包不再直接提供安装入口。统一安装方式请使用聚合模板包：
 
@@ -48,16 +50,16 @@ dotnet pack .\Templates\VueZero.Template.Package\VueZero.Template.Package.csproj
 
 脚本支持以下参数：
 
-| 参数 | 说明 |
-|------|------|
-| Configuration | 打包配置，默认 Release |
-| PackageVersion | 指定模板包版本号 |
+- Configuration：打包配置，默认 Release
+- PackageVersion：指定模板包版本号；未指定时脚本会按中国时区自动生成当天正式版号
 
 说明：
 
 ```powershell
 .\Templates\VueZero.Template.Package\pack-template.ps1
 ```
+
+若未显式传入 `-PackageVersion`，脚本会自动生成当天版本号，格式为 `{主}.{子}.{年}.{月日}`，例如 `1.0.2026.0524`。
 
 如需安装或做 SmokeTest，请统一使用聚合模板包脚本。
 
@@ -119,8 +121,8 @@ dotnet run
 
 例如使用默认值时：
 
-- http://localhost:5117
-- https://localhost:7272
+- <http://localhost:5117>
+- <https://localhost:7272>
 
 ### 启动前端开发服务器
 
@@ -134,7 +136,7 @@ npm run dev
 
 默认前端开发地址取决于 ClientDevPort，默认是：
 
-- https://localhost:53007
+- <https://localhost:53007>
 
 ### 前后端联调
 
@@ -148,16 +150,14 @@ npm run dev
 
 ## 模板参数
 
-| 参数 | 默认值 | 说明 |
-|------|--------|------|
-| ProjectTitle | VueZero 应用 | 项目标题，同时写入后端程序集标题、Swagger 标题、前端 README 标题 |
-| ProjectDescription | 基于 Vue 3 + Vite + ASP.NET Core 的前后端模板 | 项目描述，同时写入后端程序集描述和 Swagger 描述 |
-| CompanyName | PeiKeSmart | 公司名称，同时写入程序集 Company 等元数据 |
-| ServiceName | __SERVICE_NAME__ | 服务注册名称。未显式传入时，运行时回退到后端应用名 |
-| ServerHttpPort | 5117 | 后端 HTTP 端口 |
-| ServerHttpsPort | 7272 | 后端 HTTPS 端口 |
-| ClientDevPort | 53007 | 前端 Vite 开发端口，同时用于 SpaProxyServerUrl |
-| ClientPackageName | vuezero.client | 前端包名，同时用于本地开发证书名 |
+- ProjectTitle：默认值为“VueZero 应用”，项目标题，同时写入后端程序集标题、Swagger 标题、前端 README 标题
+- ProjectDescription：默认值为“基于 Vue 3 + Vite + ASP.NET Core 的前后端模板”，项目描述，同时写入后端程序集描述和 Swagger 描述
+- CompanyName：默认值为“PeiKeSmart”，公司名称，同时写入程序集 Company 等元数据
+- ServiceName：默认值为“__SERVICE_NAME__”，服务注册名称。未显式传入时，运行时回退到后端应用名
+- ServerHttpPort：默认值为“5117”，后端 HTTP 端口
+- ServerHttpsPort：默认值为“7272”，后端 HTTPS 端口
+- ClientDevPort：默认值为“53007”，前端 Vite 开发端口，同时用于 SpaProxyServerUrl
+- ClientPackageName：默认值为“vuezero.client”，前端包名，同时用于本地开发证书名
 
 ## 参数影响点
 

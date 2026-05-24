@@ -31,8 +31,10 @@
 只打包不安装：
 
 ```powershell
-dotnet pack .\Templates\PekMvc.Template.Package\PekMvc.Template.Package.csproj -c Release
+dotnet pack .\Templates\PekMvc.Template.Package\PekMvc.Template.Package.csproj -c Release /p:PackageVersion=1.1.2026.0524
 ```
+
+更推荐直接使用该目录下的脚本；若省略 `/p:PackageVersion=...`，`dotnet pack` 会沿用项目文件中的固定版本号。
 
 该模板包不再直接提供安装入口。统一安装方式请使用聚合模板包：
 
@@ -44,16 +46,16 @@ dotnet pack .\Templates\PekMvc.Template.Package\PekMvc.Template.Package.csproj -
 
 脚本支持以下参数：
 
-| 参数 | 说明 |
-|------|------|
-| Configuration | 打包配置，默认 Release |
-| PackageVersion | 指定模板包版本号 |
+- Configuration：打包配置，默认 Release
+- PackageVersion：指定模板包版本号；未指定时脚本会按中国时区自动生成当天正式版号
 
 说明：
 
 ```powershell
 .\Templates\PekMvc.Template.Package\pack-template.ps1
 ```
+
+若未显式传入 `-PackageVersion`，脚本会自动生成当天版本号，格式为 `{主}.{子}.{年}.{月日}`，例如 `1.1.2026.0524`。
 
 如需安装或做 SmokeTest，请统一使用聚合模板包脚本。
 
@@ -133,13 +135,11 @@ dotnet publish .\Output\DemoPekMvc\DemoPekMvc.csproj -c Release
 
 ## 模板参数
 
-| 参数 | 默认值 | 说明 |
-|------|--------|------|
-| ProjectTitle | 工具网站 | 站点标题，同时写入程序集标题和默认站点标题 |
-| ProjectDescription | 在线工具系统 | 项目描述，同时写入程序集描述和默认 SEO 描述 |
-| CompanyName | 湖北登灏科技有限公司 | 公司名称，同时写入程序集 Company 等元数据 |
-| ServiceName | __SERVICE_NAME__ | 服务注册名称。未显式传入时，运行时回退到项目名 |
-| DbConnName | DH | XCode 数据库连接名，同时写入配置、实体和 Model.xml |
+- ProjectTitle：默认值为“工具网站”，站点标题，同时写入程序集标题和默认站点标题
+- ProjectDescription：默认值为“在线工具系统”，项目描述，同时写入程序集描述和默认 SEO 描述
+- CompanyName：默认值为“湖北登灏科技有限公司”，公司名称，同时写入程序集 Company 等元数据
+- ServiceName：默认值为“__SERVICE_NAME__”，服务注册名称。未显式传入时，运行时回退到项目名
+- DbConnName：默认值为“DH”，XCode 数据库连接名，同时写入配置、实体和 Model.xml
 
 ## 参数影响点
 

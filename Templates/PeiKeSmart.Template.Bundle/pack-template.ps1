@@ -8,6 +8,27 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Get-DefaultPackageVersion([String]$projectPath)
+{
+    $projectText = Get-Content $projectPath -Raw
+    $versionMatch = [regex]::Match($projectText, '<PackageVersion>\s*(?<version>[^<]+)\s*</PackageVersion>', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    if (!$versionMatch.Success)
+    {
+        throw "PackageVersion was not found in $projectPath"
+    }
+
+    $currentVersion = $versionMatch.Groups['version'].Value.Trim()
+    $prefixMatch = [regex]::Match($currentVersion, '^(?<prefix>\d+\.\d+)\.\d{4}\.\d{4}(-beta\d{4})?$')
+    if (!$prefixMatch.Success)
+    {
+        throw "Unexpected PackageVersion format: $currentVersion"
+    }
+
+    $chinaTimeZone = [System.TimeZoneInfo]::FindSystemTimeZoneById('China Standard Time')
+    $now = [System.TimeZoneInfo]::ConvertTime([DateTimeOffset]::UtcNow, $chinaTimeZone)
+    return '{0}.{1}' -f $prefixMatch.Groups['prefix'].Value, $now.ToString('yyyy.MMdd')
+}
+
 Push-Location $PSScriptRoot
 try
 {
@@ -37,11 +58,16 @@ try
     }
 
     $templatePackageIds = $templatePackageIds | Select-Object -Unique
-    $packArgs = @("pack", $project, "-c", $Configuration)
-    if ($PackageVersion)
+    $resolvedPackageVersion = $PackageVersion
+    if ([String]::IsNullOrWhiteSpace($resolvedPackageVersion))
     {
-        $packArgs += "/p:PackageVersion=$PackageVersion"
+        $resolvedPackageVersion = Get-DefaultPackageVersion $project
     }
+
+    $packArgs = @("pack", $project, "-c", $Configuration)
+    $packArgs += "/p:PackageVersion=$resolvedPackageVersion"
+
+    Write-Host "PackageVersion: $resolvedPackageVersion"
 
     & dotnet @packArgs
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

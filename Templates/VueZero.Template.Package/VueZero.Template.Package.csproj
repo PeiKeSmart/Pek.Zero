@@ -7,7 +7,7 @@
     <Description>VueZero dotnet new template package</Description>
     <Authors>PeiKeSmart</Authors>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.2026.0317</PackageVersion>
+    <PackageVersion>1.0.2026.0524</PackageVersion>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeContentInPack>true</IncludeContentInPack>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
